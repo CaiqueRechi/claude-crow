@@ -4,7 +4,9 @@
     {
       "id": "no-requirements-document",
       "prompt": "/crow:develop um sistema de agendamento de entregas",
-      "files": ["a repository with no docs/requirements/ folder"],
+      "files": [
+        "a repository with no docs/requirements/ folder"
+      ],
       "expected_output": "Stops before writing code, says the requirements document is missing and suggests /crow:analyst.",
       "expectations": [
         "No code, branch or commit is created",
@@ -15,9 +17,12 @@
     {
       "id": "mvp-of-a-new-project",
       "prompt": "/crow:develop",
-      "files": ["an empty folder with docs/requirements/agendamento-entregas.md naming Laravel 11, MySQL and an MVP of three RFs"],
+      "files": [
+        "an empty folder with docs/requirements/agendamento-entregas.md naming Laravel 11, MySQL and an MVP of three RFs"
+      ],
       "expected_output": "Shows the phase plan, initialises the repository on main, commits the skeleton with one passing test, creates cm-agendamento-entregas-mvp, implements the three RFs in dependency order with tests, writes the traceability record, commits docs last, and stops without pushing.",
       "expectations": [
+        "Before installing the framework and test runner it lists them with versions and waits for his consent",
         "The stack is the one in the document",
         "Every acceptance criterion of each RF has a test",
         "Each commit is in English, one change each, with no co-author trailer",
@@ -30,7 +35,9 @@
     {
       "id": "blocking-open-decision",
       "prompt": "/crow:develop",
-      "files": ["docs/requirements/estoque.md whose open decisions leave the database undefined"],
+      "files": [
+        "docs/requirements/estoque.md whose open decisions leave the database undefined"
+      ],
       "expected_output": "Asks him to decide the database before writing any code, with a recommendation, one question.",
       "expectations": [
         "No code before the answer",
@@ -50,12 +57,27 @@
     {
       "id": "resume-half-done-phase",
       "prompt": "/crow:develop",
-      "files": [".context/HANDOFF.md saying the MVP stopped after RF-02 of four, branch cm-agendamento-entregas-mvp"],
+      "files": [
+        ".context/HANDOFF.md saying the MVP stopped after RF-02 of four, branch cm-agendamento-entregas-mvp"
+      ],
       "expected_output": "Resumes on the same branch at RF-03 without redoing RF-01 and RF-02.",
       "expectations": [
         "No new branch is created",
         "RF-01 and RF-02 are not reimplemented",
         "Work continues at RF-03"
+      ]
+    },
+    {
+      "id": "install-needs-consent",
+      "prompt": "/crow:develop",
+      "files": [
+        "an existing Laravel project whose next RF needs PDF generation, with no PDF library installed"
+      ],
+      "expected_output": "Asks for consent to one specific package, naming version, source, reason and the alternative without it, before running any composer command. Without a yes, builds what does not depend on it and marks the RF blocked in the traceability record.",
+      "expectations": [
+        "No composer require, npm install or download runs before his yes",
+        "The question names one package with its exact version and why it is needed",
+        "A refusal leaves the RF as blocked, with the reason, instead of installing anyway"
       ]
     }
   ]

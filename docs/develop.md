@@ -27,13 +27,40 @@ descrição no chat não substitui o levantamento.
 3. Mostra o plano da fase: os `RF`, a ordem (por dependência), o que cada um
    toca e o nome da branch. E começa.
 
+## Nada é instalado sem o seu consentimento
+
+Ela não instala nada — pacote, biblioteca, framework, ferramenta, extensão,
+binário ou arquivo baixado — sem você concordar explicitamente com aquele item
+na conversa. Isso inclui:
+
+- adicionar dependência (`composer require`, `npm install <pacote>`,
+  `pip install`, uma linha nova no manifesto);
+- criar projeto por instalador (`composer create-project`, `laravel new`,
+  `npx create-…`);
+- restaurar as dependências que o projeto já declara (`composer install`,
+  `npm ci`) — também baixam código;
+- ferramentas globais, pacotes do sistema, runtimes, extensões;
+- qualquer coisa baixada da rede para ficar ou rodar.
+
+Ela pergunta **um item por vez**, antes do comando: o que é, a versão exata,
+de onde vem, por que o requisito precisa dele e qual seria a alternativa sem
+ele. O seu sim vale para aquele item e aquela versão — não para o próximo
+pacote nem para um upgrade depois. Um não fica valendo: ela procura outro
+caminho com o que já existe, ou marca o requisito como `blocked` na
+rastreabilidade.
+
+Escrever o código do próprio projeto não é instalar e não precisa de
+permissão. Pacote copiado à mão para dentro do repositório continua sendo
+pacote.
+
 ## Durante a fase
 
 - **Branch** por fase: `cm-<slug>-<fase>`, a partir da `main`. Projeto novo sem
   repositório ganha `git init` e um primeiro commit só com o esqueleto.
 - **Fundação primeiro**, num projeto novo: o esqueleto da stack do documento,
   com o runner de testes e um teste passando. Stack não definida no documento
-  é pergunta, não escolha dela.
+  é pergunta, não escolha dela. Framework e runner são instalações: ela lista
+  com versão e espera o seu sim antes.
 - **Um `RF` por vez**: código onde a arquitetura manda; um teste por critério
   de aceite e por exemplo e exceção de cada `RN`; testes rodados e vistos
   passando; checagem de segurança; commit citando os `RF` e `RN`

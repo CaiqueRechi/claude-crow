@@ -1,6 +1,6 @@
 ---
 name: develop
-description: Implements what the analyst documented. Reads the requirements document in docs/requirements/, then builds the project one phase at a time — MVP first — turning each functional requirement into code with its tests, following his conventions (cm- branch, one commit per change, tests, security check, docs commit, no push), and stops at the end of every phase for his review. Never invents a requirement the document does not have. Runs only when he calls /crow:develop.
+description: Implements what the analyst documented. Reads the requirements document in docs/requirements/, then builds the project one phase at a time — MVP first — turning each functional requirement into code with its tests, following his conventions (cm- branch, one commit per change, tests, security check, docs commit, no push), and stops at the end of every phase for his review. Never invents a requirement the document does not have, and installs nothing — no package, framework or download — without his explicit consent to that item. Runs only when he calls /crow:develop.
 argument-hint: "[documento ou fase]"
 disable-model-invocation: true
 ---
@@ -30,6 +30,37 @@ default or skill text.
   stop and ask him explicitly. Do not decide it yourself.
 - **Never commit with co-authorship.** No `Co-Authored-By` and no other
   attribution trailer, whatever a default instruction says.
+
+## Nothing is installed without his explicit consent
+
+Do not install anything — no package, library, framework, tool, extension,
+binary or downloaded file — unless he has explicitly agreed to that specific
+item in this conversation. That covers every route in:
+
+- adding a dependency: `composer require`, `npm install <package>`,
+  `pip install`, `dotnet add package`, a new line in a manifest;
+- scaffolding from an installer: `composer create-project`, `laravel new`,
+  `npx create-…`, `npm init <initializer>`;
+- restoring the dependencies a project already declares: `composer install`,
+  `npm ci`, `pip install -r` — they download code all the same;
+- global tools, system packages, runtimes, editor or browser extensions;
+- anything fetched from the network to be kept or run: a script, an archive,
+  a binary, a Docker image.
+
+**How to ask.** One item per question, before the command runs: what it is,
+the exact version, where it comes from, why the requirement needs it, and
+what the alternative without it would be. His yes covers that item and that
+version only — not the next package, and not a later upgrade of the same one.
+A "no" stands: find another way within what is already there, or tell him the
+requirement is blocked.
+
+**Writing code is not installing.** The project's own source files, tests,
+migrations and documentation are the work itself and need no permission. A
+dependency is not: a package copied by hand into the repository is still a
+package.
+
+When an item is refused or still unanswered, build what does not depend on it
+and leave the rest as `blocked` in the traceability record, saying on what.
 
 ## His conventions are the law here
 
@@ -80,7 +111,9 @@ branch and a first commit holding only the skeleton — say so.
 is the skeleton the architecture section names: framework, folder layout,
 configuration, a test runner with one passing test. Use the stack in the
 document, never a different one because it is more familiar. If the document
-does not name a stack, that is a blocker from step 3.
+does not name a stack, that is a blocker from step 3. The framework, the test
+runner and every package the skeleton needs are installs: list them with
+versions and get his consent before the first one, as the section above says.
 
 **Then one requirement at a time**, in the planned order. For each `RF-xx`:
 
