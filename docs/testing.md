@@ -246,10 +246,11 @@ fixtures em outra máquina pode esbarrar no mesmo bloqueio.
 ## develop
 
 **Só verificação estrutural.** O plugin valida, o `SKILL.md` tem o bloco de
-regras inegociáveis e o nome passa no teste de nomes. Os cinco cenários estão
+regras inegociáveis e o nome passa no teste de nomes. Os seis cenários estão
 em [evals/develop/evals.json](../evals/develop/evals.json): sem documento de
 requisitos, MVP de um projeto novo, decisão em aberto que bloqueia a fase,
-contradição encontrada no meio da construção e fase retomada pela metade.
+contradição encontrada no meio da construção, fase retomada pela metade e
+requisito que precisa de um pacote ainda não instalado.
 Nenhum foi executado, pelo mesmo bloqueio de autenticação do CLI.
 
 ## build
