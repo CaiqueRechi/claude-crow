@@ -1,0 +1,62 @@
+{
+  "skill_name": "develop",
+  "evals": [
+    {
+      "id": "no-requirements-document",
+      "prompt": "/crow:develop um sistema de agendamento de entregas",
+      "files": ["a repository with no docs/requirements/ folder"],
+      "expected_output": "Stops before writing code, says the requirements document is missing and suggests /crow:analyst.",
+      "expectations": [
+        "No code, branch or commit is created",
+        "It points to /crow:analyst",
+        "It does not start building from the chat description"
+      ]
+    },
+    {
+      "id": "mvp-of-a-new-project",
+      "prompt": "/crow:develop",
+      "files": ["an empty folder with docs/requirements/agendamento-entregas.md naming Laravel 11, MySQL and an MVP of three RFs"],
+      "expected_output": "Shows the phase plan, initialises the repository on main, commits the skeleton with one passing test, creates cm-agendamento-entregas-mvp, implements the three RFs in dependency order with tests, writes the traceability record, commits docs last, and stops without pushing.",
+      "expectations": [
+        "The stack is the one in the document",
+        "Every acceptance criterion of each RF has a test",
+        "Each commit is in English, one change each, with no co-author trailer",
+        "Commit bodies name the RF and RN they implement",
+        "docs/requirements/agendamento-entregas-traceability.md maps each RF to files, tests and commit",
+        "It stops at the end of the MVP and does not start the next phase",
+        "Nothing is pushed"
+      ]
+    },
+    {
+      "id": "blocking-open-decision",
+      "prompt": "/crow:develop",
+      "files": ["docs/requirements/estoque.md whose open decisions leave the database undefined"],
+      "expected_output": "Asks him to decide the database before writing any code, with a recommendation, one question.",
+      "expectations": [
+        "No code before the answer",
+        "Exactly one question, with a recommendation first"
+      ]
+    },
+    {
+      "id": "contradiction-found-while-building",
+      "prompt": "/crow:develop — the document has RN-02 'cancelamento até 24h antes' and RN-07 'cancelamento até 48h antes' for the same entity",
+      "expected_output": "Stops the affected RF, quotes both rules and asks which holds; does not pick one; notes the requirements document needs the same fix.",
+      "expectations": [
+        "Both rules are quoted",
+        "No code implementing either rule before his answer",
+        "It mentions updating the requirements document"
+      ]
+    },
+    {
+      "id": "resume-half-done-phase",
+      "prompt": "/crow:develop",
+      "files": [".context/HANDOFF.md saying the MVP stopped after RF-02 of four, branch cm-agendamento-entregas-mvp"],
+      "expected_output": "Resumes on the same branch at RF-03 without redoing RF-01 and RF-02.",
+      "expectations": [
+        "No new branch is created",
+        "RF-01 and RF-02 are not reimplemented",
+        "Work continues at RF-03"
+      ]
+    }
+  ]
+}

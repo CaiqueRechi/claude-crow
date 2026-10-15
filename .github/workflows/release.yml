@@ -1,4 +1,4 @@
-name: Validate and release skill
+name: Validate and release plugin
 
 on:
   pull_request:
@@ -12,12 +12,24 @@ permissions:
 
 jobs:
   validate:
-    name: Validate release package
+    name: Validate plugin package
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install test dependencies
+        run: npm ci
+
+      - name: Run plugin and security rule tests
+        run: npm test
 
       - name: Build release package
         run: .github/scripts/package-skill.sh
@@ -44,8 +56,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version="$(tr -d '[:space:]' < VERSION)"
-          tag="v$version"
-          archive="dist/rm-skill-claude-$tag.zip"
+          tag="crow-v$version"
+          archive="dist/$tag.zip"
 
           if gh release view "$tag" >/dev/null 2>&1; then
               echo "Release $tag already exists; nothing to publish."
@@ -71,5 +83,5 @@ jobs:
               "$archive.sha256" \
               --verify-tag \
               --target "$GITHUB_SHA" \
-              --title "rm-skill-claude $tag" \
+              --title "crow v$version" \
               --generate-notes
