@@ -33,6 +33,7 @@ mkdir -p "$packageDirectory/docs"
 
 cp README.md SKILL.md "$packageDirectory/"
 cp "${documentationFiles[@]}" "$packageDirectory/docs/"
+cp -R references "$packageDirectory/"
 
 (
     cd "$outputDirectory"
