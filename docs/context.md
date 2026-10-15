@@ -15,10 +15,10 @@ Só rodam quando chamados. Nada é carregado nem salvo sozinho.
 
 | Comando | Quando usar | O que faz |
 | --- | --- | --- |
-| `/rm:context` ou `/rm:context prepare` | ao começar num projeto | lê o projeto e cria **só os arquivos que faltam** |
-| `/rm:context save` | antes dos tokens acabarem, antes de trocar de modelo ou ferramenta, ao encerrar | registra onde parou e a próxima ação |
-| `/rm:context resume` | ao abrir um chat, modelo ou ferramenta novos | lê tudo, confere com o git e continua |
-| `/rm:context message <para> <texto>` | para deixar recado para outro agente | cria uma mensagem em `.context/messages/` |
+| `/crow:context` ou `/crow:context prepare` | ao começar num projeto | lê o projeto e cria **só os arquivos que faltam** |
+| `/crow:context save` | antes dos tokens acabarem, antes de trocar de modelo ou ferramenta, ao encerrar | registra onde parou e a próxima ação |
+| `/crow:context resume` | ao abrir um chat, modelo ou ferramenta novos | lê tudo, confere com o git e continua |
+| `/crow:context message <para> <texto>` | para deixar recado para outro agente | cria uma mensagem em `.context/messages/` |
 
 ## Arquivos que ela cria
 

@@ -7,7 +7,7 @@ construída certa, e então escreve a documentação da solução.
 ## Como chamar
 
 ```
-/rm:analyst <descrição da solicitação>
+/crow:analyst <descrição da solicitação>
 ```
 
 A descrição pode ser uma linha só. Sem descrição, a primeira pergunta é o que

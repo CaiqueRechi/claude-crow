@@ -7,16 +7,16 @@ local: nada é publicado, nada sai da máquina.
 
 | Comando | Faz |
 | --- | --- |
-| `/rm:build` ou `/rm:build up` | cria os arquivos de ambiente que faltam, sobe os containers, prepara o banco e confere a URL |
-| `/rm:build status` | mostra o que está rodando, em que porta, e se a URL responde |
-| `/rm:build down` | para os containers e mantém os dados |
-| `/rm:build reset` | apaga os dados locais e recomeça — só depois de você confirmar |
+| `/crow:build` ou `/crow:build up` | cria os arquivos de ambiente que faltam, sobe os containers, prepara o banco e confere a URL |
+| `/crow:build status` | mostra o que está rodando, em que porta, e se a URL responde |
+| `/crow:build down` | para os containers e mantém os dados |
+| `/crow:build reset` | apaga os dados locais e recomeça — só depois de você confirmar |
 
 ## O que ela faz no `up`
 
 1. Lê `ARCHITECTURE.md`, os requisitos e os manifestos do projeto para saber o
    que subir: a aplicação, o banco e só os extras que a arquitetura cita.
-   Sem código de aplicação ainda, aponta para `/rm:develop`.
+   Sem código de aplicação ainda, aponta para `/crow:develop`.
 2. Confere o Docker. Com o Docker Desktop fechado, pede para você abrir — não
    abre nem mexe na configuração dele.
 3. Cria **só o que falta**: `compose.yaml`, `docker/app/Dockerfile`,

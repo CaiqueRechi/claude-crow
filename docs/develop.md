@@ -7,14 +7,14 @@ diz, e nada que ele não diga.
 ## Como chamar
 
 ```
-/rm:develop
-/rm:develop <documento ou fase>
+/crow:develop
+/crow:develop <documento ou fase>
 ```
 
 Sem argumento, ela pega o documento de `docs/requirements/` (pergunta qual, se
 houver mais de um) e a próxima fase ainda não feita — o MVP primeiro.
 
-Sem documento de requisitos ela **não começa**: aponta para `/rm:analyst`. Uma
+Sem documento de requisitos ela **não começa**: aponta para `/crow:analyst`. Uma
 descrição no chat não substitui o levantamento.
 
 ## Antes do código
@@ -38,7 +38,7 @@ descrição no chat não substitui o levantamento.
   de aceite e por exemplo e exceção de cada `RN`; testes rodados e vistos
   passando; checagem de segurança; commit citando os `RF` e `RN`
   implementados.
-- **Suas convenções valem em tudo** (`/rm:conventions`): commits em inglês, um
+- **Suas convenções valem em tudo** (`/crow:conventions`): commits em inglês, um
   por mudança, testes, `docs:` por último, nunca coautoria, **nunca push**.
 - **Documento errado ou omisso** → para aquele requisito e pergunta. Não
   inventa e não escolhe entre duas regras que se contradizem. A decisão também
@@ -46,7 +46,7 @@ descrição no chat não substitui o levantamento.
 - **Nada fora do escopo.** O que seria útil e o documento não pede vira
   sugestão, não código.
 
-Para rodar testes que precisam de banco, ela usa o ambiente da `/rm:build`.
+Para rodar testes que precisam de banco, ela usa o ambiente da `/crow:build`.
 
 ## Fim da fase
 
@@ -55,10 +55,10 @@ Para rodar testes que precisam de banco, ela usa o ambiente da `/rm:build`.
   testes, commit e estado (`implemented`, `partial` ou `blocked`);
 - documentação do projeto atualizada, num commit `docs:` por último;
 - relatório por tópico e **parada**. A próxima fase só começa quando você
-  chamar `/rm:develop` de novo.
+  chamar `/crow:develop` de novo.
 
-Ela sugere `/rm:context save`, `/rm:build` se ainda não houver ambiente, e
-`/rm:security-validation` antes do merge.
+Ela sugere `/crow:context save`, `/crow:build` se ainda não houver ambiente, e
+`/crow:security-validation` antes do merge.
 
 ## Limitações
 

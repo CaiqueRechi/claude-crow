@@ -172,7 +172,7 @@ execução — pela mesma razão da rodada acima:
 | **existing-repo** | não pergunta o que o repositório já responde, e trata o que leu como inferido, não como coberto |
 | **close-early** | com `pode fechar`, escreve as dezesseis seções, não inventa decisão e manda o que faltou para as decisões em aberto |
 | **resume-from-handoff** | retoma a entrevista do ledger salvo em `.context/HANDOFF.md`, sem repetir o que já foi respondido |
-| **no-context-files** | sem arquivos de contexto, recomenda `/rm:context` numa linha e segue sem esperar |
+| **no-context-files** | sem arquivos de contexto, recomenda `/crow:context` numa linha e segue sem esperar |
 
 Tentativa de rodar em 15/10/2026 com `claude -p --plugin-dir`: a sessão
 headless do CLI não autenticou ("OAuth session expired"), então nenhum cenário

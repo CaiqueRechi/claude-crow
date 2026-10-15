@@ -11,7 +11,7 @@ versão 1.0.0, pt-BR).
 ## Como chamar
 
 ```
-/rm:security-validation <escopo>
+/crow:security-validation <escopo>
 ```
 
 Só roda quando chamada. Antes de começar ela:

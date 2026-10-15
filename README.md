@@ -1,23 +1,23 @@
 # rm-skill-claude
 
-Plugin `rm` do Claude Code: as minhas skills num lugar só. Cada skill vira um
+Plugin `crow` do Claude Code: as minhas skills num lugar só. Cada skill vira um
 comando com o prefixo do plugin.
 
 **Autor:** Caique Rechi Mehret
 
 | Comando | Skill | Quando roda |
 | --- | --- | --- |
-| `/rm:context` | prepara o projeto para continuar em outro modelo, ferramenta ou chat | só quando eu chamo — e é a primeira a rodar num projeto |
-| `/rm:conventions` | as minhas convenções de trabalho | sozinha, sempre que o agente for escrever código, criar branch ou commitar |
-| `/rm:analyst` | analista de requisitos | só quando eu chamo |
-| `/rm:develop` | codifica o que o analyst documentou, fase por fase | só quando eu chamo |
-| `/rm:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
-| `/rm:security-validation` | analista de segurança defensiva | só quando eu chamo |
+| `/crow:context` | prepara o projeto para continuar em outro modelo, ferramenta ou chat | só quando eu chamo — e é a primeira a rodar num projeto |
+| `/crow:conventions` | as minhas convenções de trabalho | sozinha, sempre que o agente for escrever código, criar branch ou commitar |
+| `/crow:analyst` | analista de requisitos | só quando eu chamo |
+| `/crow:develop` | codifica o que o analyst documentou, fase por fase | só quando eu chamo |
+| `/crow:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
+| `/crow:security-validation` | analista de segurança defensiva | só quando eu chamo |
 
 A ordem num projeto novo: `context` → `analyst` → `develop` → `build` →
 `security-validation`. A `conventions` vale o tempo todo.
 
-Skill nova entra em `skills/<nome>/SKILL.md` e vira `/rm:<nome>`. O nome da
+Skill nova entra em `skills/<nome>/SKILL.md` e vira `/crow:<nome>`. O nome da
 pasta tem de bater com o `name:` do frontmatter: quando divergem, a skill
 simplesmente não carrega e não dá erro nenhum. Todo nome é em inglês.
 
@@ -37,9 +37,9 @@ git, e salva ou retoma o ponto exato onde parei. Agentes de ferramentas
 diferentes deixam recado uns para os outros por arquivo.
 
 ```
-/rm:context
-/rm:context save
-/rm:context resume
+/crow:context
+/crow:context save
+/crow:context resume
 ```
 
 Como funciona: [docs/context.md](docs/context.md).
@@ -81,7 +81,7 @@ projeto: regras de negócio, requisitos, modelo de dados, arquitetura, fluxos,
 riscos e decisões em aberto.
 
 ```
-/rm:analyst sistema de agendamento de entregas
+/crow:analyst sistema de agendamento de entregas
 ```
 
 Como usar, o que ela pergunta e o que entrega: [docs/analyst.md](docs/analyst.md).
@@ -95,7 +95,7 @@ requisito a arquivos, testes e commit. Para no fim de cada fase. Sem documento,
 não começa; documento contraditório, pergunta.
 
 ```
-/rm:develop
+/crow:develop
 ```
 
 Detalhes: [docs/develop.md](docs/develop.md).
@@ -107,9 +107,9 @@ contas de teste, portas só em `127.0.0.1`, e a URL conferida antes de entregar.
 Só local, nunca publica nada.
 
 ```
-/rm:build
-/rm:build status
-/rm:build down
+/crow:build
+/crow:build status
+/crow:build down
 ```
 
 Detalhes: [docs/build.md](docs/build.md).
@@ -124,7 +124,7 @@ como, e o que ficou de fora. Nunca afirma que o sistema está livre de
 vulnerabilidades.
 
 ```
-/rm:security-validation API de pedidos
+/crow:security-validation API de pedidos
 ```
 
 Como usar, as regras e onde ela se afasta da especificação:
@@ -137,7 +137,7 @@ do Claude Code:
 
 ```
 /plugin marketplace add CaiqueRechi/rm-skill-claude
-/plugin install rm@rm-skill-claude
+/plugin install crow@rm-skill-claude
 ```
 
 Ou pelo terminal:
@@ -147,7 +147,7 @@ claude plugin marketplace add CaiqueRechi/rm-skill-claude
 ```
 
 ```bash
-claude plugin install rm@rm-skill-claude
+claude plugin install crow@rm-skill-claude
 ```
 
 Para usar um clone local em vez do GitHub — útil enquanto uma skill está sendo
@@ -155,9 +155,9 @@ escrita — passe o caminho da pasta no lugar de `CaiqueRechi/rm-skill-claude`.
 Para testar sem instalar, `claude --plugin-dir <caminho do clone>` carrega o
 plugin só naquela sessão.
 
-### Vindo da 1.x
+### Vindo do rm-skill-claude 1.x
 
-Até a 1.1.0 a skill era clonada direto em `~/.claude/skills/rm-skill-claude`.
+Até a 1.1.0, antes de virar o plugin `crow`, a skill era clonada direto em `~/.claude/skills/rm-skill-claude`.
 Apague essa pasta depois de instalar o plugin: nesse formato ela não carrega
 mais, e se for atualizada por `git pull` volta a carregar a versão antiga.
 
@@ -166,25 +166,25 @@ mais, e se for atualizada por `git pull` volta a carregar a versão antiga.
 As [Releases](https://github.com/CaiqueRechi/rm-skill-claude/releases) oferecem
 um ZIP do plugin e o respectivo checksum SHA-256. Baixe os dois arquivos da
 versão desejada, valide o checksum, extraia o ZIP onde quiser e adicione a
-pasta `rm-skill-claude` extraída como marketplace.
+pasta `crow` extraída como marketplace.
 
 No Linux:
 
 ```bash
-sha256sum -c rm-skill-claude-v2.0.0.zip.sha256
-unzip rm-skill-claude-v2.0.0.zip -d ~/plugins
-claude plugin marketplace add ~/plugins/rm-skill-claude
-claude plugin install rm@rm-skill-claude
+sha256sum -c crow-v1.0.0.zip.sha256
+unzip crow-v1.0.0.zip -d ~/plugins
+claude plugin marketplace add ~/plugins/crow
+claude plugin install crow@rm-skill-claude
 ```
 
 No PowerShell, compare o resultado abaixo com o valor presente no arquivo
 `.sha256` antes de extrair:
 
 ```powershell
-Get-FileHash .\rm-skill-claude-v2.0.0.zip -Algorithm SHA256
-Expand-Archive .\rm-skill-claude-v2.0.0.zip -DestinationPath "$HOME\plugins"
+Get-FileHash .\crow-v1.0.0.zip -Algorithm SHA256
+Expand-Archive .\crow-v1.0.0.zip -DestinationPath "$HOME\plugins"
 claude plugin marketplace add "$HOME\plugins\rm-skill-claude"
-claude plugin install rm@rm-skill-claude
+claude plugin install crow@rm-skill-claude
 ```
 
 ## Releases
@@ -198,10 +198,13 @@ Todo pull request roda os testes e valida a estrutura e a criação do ZIP. Quan
 entra na `main` com uma versão ainda não publicada, o workflow cria
 automaticamente:
 
-- a tag `vX.Y.Z`;
+- a tag `crow-vX.Y.Z`;
 - a Release com notas geradas a partir dos commits;
-- o pacote `rm-skill-claude-vX.Y.Z.zip`;
-- o checksum `rm-skill-claude-vX.Y.Z.zip.sha256`.
+- o pacote `crow-vX.Y.Z.zip`;
+- o checksum `crow-vX.Y.Z.zip.sha256`.
+
+As tags `v1.0.0`, `v1.0.1` e `v1.1.0` são do `rm-skill-claude` antes de virar
+o plugin `crow`; por isso as releases do `crow` usam o prefixo `crow-`.
 
 Depois de uma versão publicada, a próxima alteração que deva gerar Release
 precisa atualizar `VERSION` e `plugin.json` juntos.
