@@ -1,12 +1,14 @@
-# Como esta skill foi testada
+# Como as skills foram testadas
 
 Uma skill é texto. Não compila, não tem suíte, e quem a escreve é a pior pessoa
 para achar defeito nela. A única verificação que vale é comportamental: dar a
 mesma tarefa a dois agentes, um com a skill e outro sem, e comparar o que cada
 um produz.
 
-Este documento registra a rodada de 21/08/2026 — o método, os resultados e o que
-ficou de fora.
+Este documento registra a rodada de 21/08/2026 da skill de convenções — hoje
+`convencoes`, na época uma skill avulsa chamada `rm-skill-claude` — com o
+método, os resultados e o que ficou de fora. A `analista` tem seção própria no
+fim.
 
 ## Método
 
@@ -151,3 +153,29 @@ pequeno com histórico, escreva as asserções antes de rodar, e execute cada
 tarefa duas vezes — com a skill e sem — em cópias independentes do repositório.
 O par com/sem é o que dá significado ao resultado; uma execução sozinha não diz
 se a skill mudou algo.
+
+## analista
+
+**Ainda não passou por uma rodada comportamental.** O que foi verificado até
+aqui é estrutural: o manifesto do plugin passa no `claude plugin validate`, o
+`claude plugin details` lista as duas skills, e o pacote de release confere que
+o `name:` de cada skill bate com a pasta.
+
+Os três cenários estão escritos, com as asserções, em
+[evals/analista/evals.json](../evals/analista/evals.json), antes de qualquer
+execução — pela mesma razão da rodada acima:
+
+| Caso | O que discrimina |
+| --- | --- |
+| **greenfield-saas** | uma pergunta só na primeira resposta, começando por contexto, problema ou modelo de negócio |
+| **existing-repo** | não pergunta o que o repositório já responde, e trata o que leu como inferido, não como coberto |
+| **close-early** | com `pode fechar`, escreve as dezesseis seções, não inventa decisão e manda o que faltou para as decisões em aberto |
+
+Tentativa de rodar em 15/10/2026 com `claude -p --plugin-dir`: a sessão
+headless do CLI não autenticou ("OAuth session expired"), então nenhum cenário
+foi executado. `claude plugin eval`, que rodaria os casos com e sem o plugin,
+ainda está em acesso antecipado e não está disponível nesta conta.
+
+O que essa rodada precisa medir, além das asserções: se a entrevista mantém uma
+pergunta por mensagem depois de dez ou vinte respostas, quando a tentação de
+agrupar cresce, e quantas perguntas um levantamento real leva até os 100%.
