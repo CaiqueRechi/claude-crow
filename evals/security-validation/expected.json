@@ -1,0 +1,119 @@
+{
+  "prompt": "/rm:security-validation evals/security-validation/fixtures/php-app — análise estática apenas, sem autorização dinâmica",
+  "method": "static",
+  "note": "Estados esperados por arquivo para uma validação só estática. Em PASS, os critérios estruturais da regra são demonstrados pelo código; o relatório deve ainda declarar que os testes dinâmicos não foram executados. Os segredos do projeto de teste são de mentira.",
+  "cases": [
+    {
+      "case": "sqli-concatenation",
+      "rule_id": "SV-APP-0001",
+      "path": "fixtures/php-app/src/Vulnerable/UserSearch.php",
+      "expected_status": "FAIL",
+      "reason": "parâmetro da requisição concatenado na cláusula WHERE e executado"
+    },
+    {
+      "case": "sqli-prepared",
+      "rule_id": "SV-APP-0001",
+      "path": "fixtures/php-app/src/Fixed/UserSearch.php",
+      "expected_status": "PASS",
+      "reason": "consulta preparada com parâmetro nomeado"
+    },
+    {
+      "case": "sqli-constant-identifier",
+      "rule_id": "SV-APP-0001",
+      "path": "fixtures/php-app/src/Ambiguous/ReportQuery.php",
+      "expected_status": "PASS",
+      "reason": "falso positivo esperado: SQL dinâmico, mas a parte variável é uma constante e o valor externo é parametrizado"
+    },
+    {
+      "case": "sqli-vendor-builder",
+      "rule_id": "SV-APP-0001",
+      "path": "fixtures/php-app/src/Ambiguous/LegacyFilter.php",
+      "expected_status": "INCONCLUSIVE",
+      "reason": "o SQL vem de um pacote que não está no repositório; o fluxo de dados não pôde ser rastreado"
+    },
+    {
+      "case": "xss-raw-echo",
+      "rule_id": "SV-APP-0002",
+      "path": "fixtures/php-app/views/profile-unsafe.php",
+      "expected_status": "FAIL",
+      "reason": "valor da requisição impresso no HTML sem codificação"
+    },
+    {
+      "case": "xss-encoded",
+      "rule_id": "SV-APP-0002",
+      "path": "fixtures/php-app/views/profile-safe.php",
+      "expected_status": "PASS",
+      "reason": "htmlspecialchars com ENT_QUOTES no contexto de corpo HTML"
+    },
+    {
+      "case": "idor-no-owner-check",
+      "rule_id": "SV-APP-0003",
+      "path": "fixtures/php-app/src/Vulnerable/InvoiceController.php",
+      "expected_status": "FAIL",
+      "reason": "fatura buscada só pelo id, contra a política que restringe ao cliente dono"
+    },
+    {
+      "case": "idor-scoped",
+      "rule_id": "SV-APP-0003",
+      "path": "fixtures/php-app/src/Fixed/InvoiceController.php",
+      "expected_status": "PASS",
+      "reason": "consulta escopada pelo cliente autenticado"
+    },
+    {
+      "case": "path-traversal-join",
+      "rule_id": "SV-APP-0007",
+      "path": "fixtures/php-app/src/Vulnerable/DownloadController.php",
+      "expected_status": "FAIL",
+      "reason": "nome de arquivo da requisição concatenado ao diretório sem resolver o caminho"
+    },
+    {
+      "case": "path-traversal-realpath",
+      "rule_id": "SV-APP-0007",
+      "path": "fixtures/php-app/src/Fixed/DownloadController.php",
+      "expected_status": "PASS",
+      "reason": "caminho resolvido com realpath e verificado dentro do diretório base"
+    },
+    {
+      "case": "command-injection-shell",
+      "rule_id": "SV-APP-0013",
+      "path": "fixtures/php-app/src/Vulnerable/NetworkDiagnostics.php",
+      "expected_status": "FAIL",
+      "reason": "valor da query string concatenado a um comando executado por shell, através de um método privado"
+    },
+    {
+      "case": "command-injection-argument-list",
+      "rule_id": "SV-APP-0013",
+      "path": "fixtures/php-app/src/Fixed/PingController.php",
+      "expected_status": "PASS",
+      "reason": "IP validado e processo executado com lista de argumentos, sem shell"
+    },
+    {
+      "case": "zip-slip",
+      "rule_id": "SV-APP-0017",
+      "path": "fixtures/php-app/src/Vulnerable/ImportArchive.php",
+      "expected_status": "FAIL",
+      "reason": "cada entrada é gravada com o caminho que o próprio arquivo compactado informa"
+    },
+    {
+      "case": "unserialize-cookie",
+      "rule_id": "SV-APP-0014",
+      "path": "fixtures/php-app/src/Ambiguous/PreferencesCookie.php",
+      "expected_status": "INCONCLUSIVE",
+      "reason": "desserialização nativa de cookie sem cadeia de gadgets demonstrável no projeto; registrar com recomendação"
+    },
+    {
+      "case": "hard-coded-password",
+      "rule_id": "SV-DATA-0001",
+      "path": "fixtures/php-app/config/database.php",
+      "expected_status": "FAIL",
+      "reason": "senha no repositório, local proibido pela política do projeto; o valor deve aparecer redigido no relatório"
+    },
+    {
+      "case": "no-xml-anywhere",
+      "rule_id": "SV-APP-0012",
+      "path": "fixtures/php-app",
+      "expected_status": "NOT_APPLICABLE",
+      "reason": "nenhum parser ou formato XML no projeto, demonstrado pela busca"
+    }
+  ]
+}

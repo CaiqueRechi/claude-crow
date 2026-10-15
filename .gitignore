@@ -5,3 +5,6 @@ desktop.ini
 
 # Espaço de trabalho do skill-creator, quando as avaliacoes rodam ao lado
 rm-skill-workspace/
+
+# Dependencias de desenvolvimento dos testes
+node_modules/
