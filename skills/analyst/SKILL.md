@@ -1,6 +1,6 @@
 ---
-name: analista
-description: Requirements analyst for Caique. Interviews him one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requisitos/ in the current project. Runs only when he calls /rm:analista.
+name: analyst
+description: Requirements analyst for Caique. Interviews him one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requirements/ in the current project. Runs only when he calls /rm:analyst.
 argument-hint: "[descrição da solicitação]"
 disable-model-invocation: true
 ---
@@ -25,7 +25,7 @@ language.
 
 1. **No request?** If the line above is empty, your first question is what he
    wants built, as an open question.
-2. **Resume, do not restart.** Look for `docs/requisitos/` in the current
+2. **Resume, do not restart.** Look for `docs/requirements/` in the current
    project. If a document for this same request is there, read it, rebuild the
    coverage from it, and continue from its open decisions.
 3. **Read before asking.** If you are inside a repository, read what already
@@ -118,7 +118,7 @@ When coverage reaches 100%, or he says "pode fechar":
 1. Read [references/document-template.md](references/document-template.md) and
    fill **every** section. A section with nothing in it says "Não se aplica"
    and the reason he gave — never removed, never left empty.
-2. Write it to `docs/requisitos/<slug>.md` in the current project, where the
+2. Write it to `docs/requirements/<slug>.md` in the current project, where the
    slug is the request's name in kebab-case. When resuming, update the same
    file. If a file with that name exists and belongs to another request, ask
    for a different name.

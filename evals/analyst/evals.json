@@ -1,9 +1,9 @@
 {
-  "skill_name": "analista",
+  "skill_name": "analyst",
   "evals": [
     {
       "id": "greenfield-saas",
-      "prompt": "/rm:analista um SaaS de agendamento de entregas para transportadoras pequenas",
+      "prompt": "/rm:analyst um SaaS de agendamento de entregas para transportadoras pequenas",
       "expected_output": "Opens with two or three lines restating the request, then asks exactly one question, from context, problem or business model. Writes no code and creates no files.",
       "expectations": [
         "The first reply contains exactly one question",
@@ -13,7 +13,7 @@
     },
     {
       "id": "existing-repo",
-      "prompt": "/rm:analista adicionar emissão de nota fiscal ao sistema",
+      "prompt": "/rm:analyst adicionar emissão de nota fiscal ao sistema",
       "files": ["a Laravel repository with composer.json, a README and migrations"],
       "expected_output": "Reads the repository before asking, does not ask which stack or database is used, and lists what it inferred so it can be confirmed in a single question.",
       "expectations": [
@@ -24,10 +24,10 @@
     },
     {
       "id": "close-early",
-      "prompt": "/rm:analista controle de ferramentas emprestadas no chão de fábrica — then answer three questions and say \"pode fechar\"",
-      "expected_output": "Writes docs/requisitos/<slug>.md with every template section present, fills only what was said, marks undiscussed items as open decisions, and reports the path, the coverage and the open decisions without committing.",
+      "prompt": "/rm:analyst controle de ferramentas emprestadas no chão de fábrica — then answer three questions and say \"pode fechar\"",
+      "expected_output": "Writes docs/requirements/<slug>.md with every template section present, fills only what was said, marks undiscussed items as open decisions, and reports the path, the coverage and the open decisions without committing.",
       "expectations": [
-        "docs/requisitos/<slug>.md exists",
+        "docs/requirements/<slug>.md exists",
         "All sixteen template sections are present",
         "Nothing he did not say appears as a decision",
         "The open decisions section lists the undiscussed areas",

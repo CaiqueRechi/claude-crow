@@ -178,7 +178,7 @@ terceiros e o que ainda não se sabe.*
 
 ## 12. Engenharia e operação
 
-*Equipe, repositório e processo (por padrão, as convenções de `/rm:convencoes`),
+*Equipe, repositório e processo (por padrão, as convenções de `/rm:conventions`),
 testes esperados, CI/CD, onde fica a documentação, monitoramento e alertas,
 backup e tempo de restauração, suporte, treinamento e implantação.*
 
