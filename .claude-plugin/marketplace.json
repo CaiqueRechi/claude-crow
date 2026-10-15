@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "rm-skill-claude",
+  "description": "Caique Rechi Mehret's Claude Code plugin.",
+  "owner": {
+    "name": "Caique Rechi Mehret"
+  },
+  "plugins": [
+    {
+      "name": "rm",
+      "source": "./",
+      "description": "Caique Rechi Mehret's skills for Claude Code: his working conventions and the tools built on them."
+    }
+  ]
+}

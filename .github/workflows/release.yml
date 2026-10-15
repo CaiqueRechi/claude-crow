@@ -1,4 +1,4 @@
-name: Validate and release skill
+name: Validate and release plugin
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate release package
+    name: Validate plugin package
     runs-on: ubuntu-latest
 
     steps:
