@@ -153,3 +153,5 @@ When coverage reaches 100%, or he says "pode fechar":
    say it is uncommitted.
 5. Report: the path, the overall coverage, the open decisions with owner and
    deadline, and the two or three risks that most deserve his attention.
+   Then the next step: `/rm:develop` builds the document phase by phase, and
+   open decisions that block the first phase will be asked there first.

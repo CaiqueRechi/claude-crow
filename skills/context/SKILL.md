@@ -134,9 +134,11 @@ changed; do not rewrite a file wholesale, and never delete history.
 5. **.context/HANDOFF.md** — replace it with the new snapshot. It must name
    **one concrete next action**, specific enough that the next agent can start
    on it without asking. When a skill is mid-way — an analyst interview, a
-   security validation — write its working state here: for the analyst, every
-   checklist item with its state and the answers so far, so the interview
-   resumes on the next question instead of starting over.
+   develop phase, a security validation — write its working state here: for
+   the analyst, every checklist item with its state and the answers so far,
+   so the interview resumes on the next question instead of starting over;
+   for develop, the phase, its branch and the state of each `RF`, so the phase
+   resumes on the next requirement.
 6. **.context/sessions/<YYYY-MM-DD>-<agent id>.md** — append this session:
    what was done, what was decided, what was left, files touched. Create the
    file if it does not exist; never edit earlier entries.
