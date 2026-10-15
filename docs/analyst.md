@@ -1,4 +1,4 @@
-# analista
+# analyst
 
 Levantamento de requisitos conduzido pelo agente. Ele entrevista, uma pergunta
 por vez, até cobrir tudo o que precisa ser verdade para a solicitação ser
@@ -7,7 +7,7 @@ construída certa, e então escreve a documentação da solução.
 ## Como chamar
 
 ```
-/rm:analista <descrição da solicitação>
+/rm:analyst <descrição da solicitação>
 ```
 
 A descrição pode ser uma linha só. Sem descrição, a primeira pergunta é o que
@@ -19,7 +19,7 @@ código seria ruído.
 
 ## O que acontece antes da primeira pergunta
 
-- **Retomada.** Se já existe em `docs/requisitos/` um documento da mesma
+- **Retomada.** Se já existe em `docs/requirements/` um documento da mesma
   solicitação, ela lê, reconstrói a cobertura e continua das decisões em aberto
   em vez de recomeçar.
 - **Leitura do repositório.** Dentro de um projeto, ela lê README,
@@ -51,7 +51,7 @@ que você decidiu.
 ## O que é "100%"
 
 A cobertura é medida contra uma checklist fixa de dezesseis áreas —
-[coverage-checklist.md](../skills/analista/references/coverage-checklist.md).
+[coverage-checklist.md](../skills/analyst/references/coverage-checklist.md).
 Cada item termina num destes estados:
 
 | Estado | Conta como coberto |
@@ -81,9 +81,9 @@ esperar.
 
 ## O que ela entrega
 
-`docs/requisitos/<nome-da-solicitacao>.md` no projeto onde foi chamada, no
+`docs/requirements/<nome-da-solicitacao>.md` no projeto onde foi chamada, no
 idioma da conversa, seguindo
-[document-template.md](../skills/analista/references/document-template.md):
+[document-template.md](../skills/analyst/references/document-template.md):
 
 1. Resumo, objetivos e situação atual
 2. Partes interessadas e usuários

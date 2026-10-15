@@ -6,8 +6,8 @@ mesma tarefa a dois agentes, um com a skill e outro sem, e comparar o que cada
 um produz.
 
 Este documento registra a rodada de 21/08/2026 da skill de convenções — hoje
-`convencoes`, na época uma skill avulsa chamada `rm-skill-claude` — com o
-método, os resultados e o que ficou de fora. A `analista` tem seção própria no
+`conventions`, na época uma skill avulsa chamada `rm-skill-claude` — com o
+método, os resultados e o que ficou de fora. A `analyst`, a `context` e a `security-validation` têm seção própria no
 fim.
 
 ## Método
@@ -154,15 +154,16 @@ tarefa duas vezes — com a skill e sem — em cópias independentes do reposit�
 O par com/sem é o que dá significado ao resultado; uma execução sozinha não diz
 se a skill mudou algo.
 
-## analista
+## analyst
 
 **Ainda não passou por uma rodada comportamental.** O que foi verificado até
 aqui é estrutural: o manifesto do plugin passa no `claude plugin validate`, o
-`claude plugin details` lista as duas skills, e o pacote de release confere que
-o `name:` de cada skill bate com a pasta.
+`claude plugin details` lista as quatro skills, e o pacote de release confere
+que o `name:` de cada skill bate com a pasta e que o bloco de regras
+inegociáveis está em todas.
 
-Os três cenários estão escritos, com as asserções, em
-[evals/analista/evals.json](../evals/analista/evals.json), antes de qualquer
+Os cenários estão escritos, com as asserções, em
+[evals/analyst/evals.json](../evals/analyst/evals.json), antes de qualquer
 execução — pela mesma razão da rodada acima:
 
 | Caso | O que discrimina |
@@ -170,6 +171,8 @@ execução — pela mesma razão da rodada acima:
 | **greenfield-saas** | uma pergunta só na primeira resposta, começando por contexto, problema ou modelo de negócio |
 | **existing-repo** | não pergunta o que o repositório já responde, e trata o que leu como inferido, não como coberto |
 | **close-early** | com `pode fechar`, escreve as dezesseis seções, não inventa decisão e manda o que faltou para as decisões em aberto |
+| **resume-from-handoff** | retoma a entrevista do ledger salvo em `.context/HANDOFF.md`, sem repetir o que já foi respondido |
+| **no-context-files** | sem arquivos de contexto, recomenda `/rm:context` numa linha e segue sem esperar |
 
 Tentativa de rodar em 15/10/2026 com `claude -p --plugin-dir`: a sessão
 headless do CLI não autenticou ("OAuth session expired"), então nenhum cenário
@@ -179,3 +182,63 @@ ainda está em acesso antecipado e não está disponível nesta conta.
 O que essa rodada precisa medir, além das asserções: se a entrevista mantém uma
 pergunta por mensagem depois de dez ou vinte respostas, quando a tentação de
 agrupar cresce, e quantas perguntas um levantamento real leva até os 100%.
+
+## context
+
+**A mecânica de arquivos foi verificada; o comportamento do agente, não.**
+
+Em 15/10/2026 os passos do `prepare` foram executados à mão, exatamente como a
+skill descreve, em repositórios descartáveis:
+
+| Verificação | Resultado |
+| --- | --- |
+| Primeira execução num repositório sem arquivos de contexto | criou os dez itens; `git status --short` continuou vazio |
+| Segunda execução, depois de editar `TASKS.md` e apagar `CONTEXT.md` e `GEMINI.md` | recriou só os dois apagados; `TASKS.md` ficou idêntico byte a byte |
+| Linhas em `info/exclude` depois das duas execuções | nenhuma duplicada |
+| Repositório que já versiona o próprio `CLAUDE.md` | `CLAUDE.md` intocado e fora do exclude; os demais criados |
+| `git rev-parse --git-path info/exclude` dentro de um worktree | aponta para o exclude do repositório principal, como esperado |
+
+O que isso não mede: se o agente segue esses passos sem pular nenhum, se o
+`save` escreve uma próxima ação concreta o bastante, e se outro modelo,
+lendo só `AGENTS.md`, retoma do ponto certo. Os cinco cenários para isso estão
+em [evals/context/evals.json](../evals/context/evals.json), ainda não
+executados pelo mesmo motivo da `analyst`.
+
+## security-validation
+
+**O catálogo é testado; a skill rodando, ainda não.**
+
+`npm test` roda em todo pull request e verifica o checklist da seção 15 da
+especificação que dá para verificar sem um agente:
+
+| Teste | O que recusa |
+| --- | --- |
+| contrato | regra que não bate com `schemas/rule.schema.json` — campo faltando, estado ou severidade inválidos, `safe_by_default` falso |
+| identificadores | id fora do formato `SV-<DOM>-<NNNN>`, ou repetido |
+| conjunto obrigatório | qualquer uma das 41 regras ausente |
+| categorias | categoria fora da taxonomia |
+| referências | CWE, ASVS, WSTG, ATT&CK ou ATLAS que não está nas tabelas verificadas de `catalog/references.md` |
+| relações | `related_controls` ou `duplicate_of` apontando para regra que não existe |
+| catálogo de ataques | família da seção 4.4 ausente, ou regra que nenhum ataque alcança |
+| fixtures | caso que cita regra inexistente, estado inválido ou arquivo que não existe; ausência de casos `PASS`, `FAIL` e `INCONCLUSIVE` |
+
+Cada teste foi conferido com uma regra quebrada de propósito — `fail_criteria`
+renomeado, id duplicado, `CWE-abc`, `CWE-99999`, categoria inventada, controle
+relacionado inexistente — e cada quebra foi recusada pelo teste certo.
+
+As referências foram conferidas contra os artefatos oficiais, com hash
+registrado em `catalog/references.md`. A conferência achou um problema real: a
+`T1562` está revogada no ATT&CK v20.0 e foi trocada pela `T1685`.
+
+**O que falta:** rodar a skill contra
+[evals/security-validation/fixtures/php-app](../evals/security-validation/fixtures/php-app)
+e comparar com [expected.json](../evals/security-validation/expected.json) —
+sete falhas plantadas, as versões corrigidas, um falso positivo esperado, dois
+casos inconclusivos e uma regra não aplicável. Bloqueado pelo mesmo
+"OAuth session expired" do CLI.
+
+**Antivírus.** O primeiro fixture de command injection, que passava `$_GET`
+direto para `shell_exec`, foi travado pelo antivírus da máquina logo depois de
+criado: o arquivo existe e ninguém consegue lê-lo. O caso foi reescrito uma vez,
+com o valor passando por um método, e essa versão é legível. Quem rodar os
+fixtures em outra máquina pode esbarrar no mesmo bloqueio.

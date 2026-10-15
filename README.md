@@ -7,14 +7,39 @@ comando com o prefixo do plugin.
 
 | Comando | Skill | Quando roda |
 | --- | --- | --- |
-| `/rm:convencoes` | as minhas convenções de trabalho | sozinha, sempre que o agente for escrever código, criar branch ou commitar |
-| `/rm:analista` | analista de requisitos | só quando eu chamo |
+| `/rm:context` | prepara o projeto para continuar em outro modelo, ferramenta ou chat | só quando eu chamo — e é a primeira a rodar num projeto |
+| `/rm:conventions` | as minhas convenções de trabalho | sozinha, sempre que o agente for escrever código, criar branch ou commitar |
+| `/rm:analyst` | analista de requisitos | só quando eu chamo |
+| `/rm:security-validation` | analista de segurança defensiva | só quando eu chamo |
 
 Skill nova entra em `skills/<nome>/SKILL.md` e vira `/rm:<nome>`. O nome da
 pasta tem de bater com o `name:` do frontmatter: quando divergem, a skill
-simplesmente não carrega e não dá erro nenhum. O pacote de release confere isso.
+simplesmente não carrega e não dá erro nenhum. Todo nome é em inglês.
 
-## convencoes
+Toda skill carrega o mesmo bloco de **regras inegociáveis**, de
+[.github/non-negotiable-rules.md](.github/non-negotiable-rules.md): subagente só
+quando eu pedir explicitamente; nunca apagar trabalho para recomeçar do zero nem
+afirmar o que não foi visto; perguntar antes de qualquer dúvida que mude a
+arquitetura ou fuja de uma regra documentada; nunca commit com coautoria. O
+pacote de release recusa uma skill sem o bloco ou com nome fora do padrão.
+
+## context
+
+Prepara o projeto para que o trabalho sobreviva ao fim de uma sessão: cria só
+os arquivos que faltam entre `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`,
+`CONTEXT.md`, `ARCHITECTURE.md`, `TASKS.md` e `.context/`, mantém tudo fora do
+git, e salva ou retoma o ponto exato onde parei. Agentes de ferramentas
+diferentes deixam recado uns para os outros por arquivo.
+
+```
+/rm:context
+/rm:context save
+/rm:context resume
+```
+
+Como funciona: [docs/context.md](docs/context.md).
+
+## conventions
 
 As decisões que eu já tomei e não quero repetir a cada sessão. Valem para
 qualquer projeto meu, e não descrevem sistema nenhum em específico.
@@ -38,23 +63,39 @@ qualquer projeto meu, e não descrevem sistema nenhum em específico.
 | Hooks | não se pula, nem com `--no-verify` |
 
 O detalhe e o **porquê** de cada uma estão em
-[skills/convencoes/SKILL.md](skills/convencoes/SKILL.md). O porquê é a parte
+[skills/conventions/SKILL.md](skills/conventions/SKILL.md). O porquê é a parte
 que importa: sem ele a letra é cumprida e a intenção se perde no primeiro caso
 que não estava previsto.
 
-## analista
+## analyst
 
 Faz o levantamento de requisitos de uma solicitação, uma pergunta por vez, até
 cobrir 100% de uma checklist de dezesseis áreas — de modelo de negócio a aceite.
-No fim escreve a documentação completa da solução em `docs/requisitos/` do
+No fim escreve a documentação completa da solução em `docs/requirements/` do
 projeto: regras de negócio, requisitos, modelo de dados, arquitetura, fluxos,
 riscos e decisões em aberto.
 
 ```
-/rm:analista sistema de agendamento de entregas
+/rm:analyst sistema de agendamento de entregas
 ```
 
-Como usar, o que ela pergunta e o que entrega: [docs/analista.md](docs/analista.md).
+Como usar, o que ela pergunta e o que entrega: [docs/analyst.md](docs/analyst.md).
+
+## security-validation
+
+Validação de segurança defensiva com 41 regras — as 24 obrigatórias da minha
+especificação e 17 para os ataques que elas não cobrem —, referências OWASP,
+CWE e MITRE conferidas nas fontes oficiais, testes dinâmicos só com
+autorização, e um relatório em `docs/security/` que diz o que foi verificado,
+como, e o que ficou de fora. Nunca afirma que o sistema está livre de
+vulnerabilidades.
+
+```
+/rm:security-validation API de pedidos
+```
+
+Como usar, as regras e onde ela se afasta da especificação:
+[docs/security-validation.md](docs/security-validation.md).
 
 ## Instalação
 
@@ -120,7 +161,7 @@ O `version` de [.claude-plugin/plugin.json](.claude-plugin/plugin.json) tem de
 ser o mesmo — é ele que o Claude Code lê para saber se há atualização — e o
 pacote falha se os dois divergirem.
 
-Todo pull request valida a estrutura e a criação do ZIP. Quando uma alteração
+Todo pull request roda os testes e valida a estrutura e a criação do ZIP. Quando uma alteração
 entra na `main` com uma versão ainda não publicada, o workflow cria
 automaticamente:
 
@@ -135,8 +176,21 @@ precisa atualizar `VERSION` e `plugin.json` juntos.
 ## Verificação
 
 [docs/testing.md](docs/testing.md) registra como cada skill foi testada e o que
-ficou de fora. Os cenários de teste da `analista` estão em
-[evals/analista/evals.json](evals/analista/evals.json).
+ficou de fora. Os cenários de cada skill estão em `evals/`.
+
+Os testes do repositório rodam com Node.js:
+
+```bash
+npm ci
+```
+
+```bash
+npm test
+```
+
+Eles verificam os nomes das skills e todo o catálogo da `security-validation`:
+contrato das regras, identificadores, categorias, referências verificadas e
+casos do projeto de teste. Nada disso entra no pacote de release.
 
 ## O que entra aqui
 
