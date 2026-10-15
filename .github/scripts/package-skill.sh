@@ -42,6 +42,15 @@ for skillFile in "${skillFiles[@]}"; do
         echo "$skillFile must declare name: $folderName." >&2
         exit 1
     fi
+
+    if ! node -e '
+        const fs = require("fs");
+        const normalize = (path) => fs.readFileSync(path, "utf8").replace(/\r\n/g, "\n");
+        process.exit(normalize(process.argv[2]).includes(normalize(process.argv[1])) ? 0 : 1);
+    ' .github/non-negotiable-rules.md "$skillFile"; then
+        echo "$skillFile must contain .github/non-negotiable-rules.md verbatim." >&2
+        exit 1
+    fi
 done
 
 documentationFiles=(docs/*.md)
