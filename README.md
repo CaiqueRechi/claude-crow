@@ -10,7 +10,12 @@ comando com o prefixo do plugin.
 | `/rm:context` | prepara o projeto para continuar em outro modelo, ferramenta ou chat | só quando eu chamo — e é a primeira a rodar num projeto |
 | `/rm:conventions` | as minhas convenções de trabalho | sozinha, sempre que o agente for escrever código, criar branch ou commitar |
 | `/rm:analyst` | analista de requisitos | só quando eu chamo |
+| `/rm:develop` | codifica o que o analyst documentou, fase por fase | só quando eu chamo |
+| `/rm:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
 | `/rm:security-validation` | analista de segurança defensiva | só quando eu chamo |
+
+A ordem num projeto novo: `context` → `analyst` → `develop` → `build` →
+`security-validation`. A `conventions` vale o tempo todo.
 
 Skill nova entra em `skills/<nome>/SKILL.md` e vira `/rm:<nome>`. O nome da
 pasta tem de bater com o `name:` do frontmatter: quando divergem, a skill
@@ -80,6 +85,34 @@ riscos e decisões em aberto.
 ```
 
 Como usar, o que ela pergunta e o que entrega: [docs/analyst.md](docs/analyst.md).
+
+## develop
+
+Pega o documento de `docs/requirements/` e constrói uma fase por vez, MVP
+primeiro: cada requisito vira código com um teste por critério de aceite,
+commits nas minhas convenções e um registro de rastreabilidade ligando cada
+requisito a arquivos, testes e commit. Para no fim de cada fase. Sem documento,
+não começa; documento contraditório, pergunta.
+
+```
+/rm:develop
+```
+
+Detalhes: [docs/develop.md](docs/develop.md).
+
+## build
+
+Sobe o projeto na minha máquina com Docker Compose: banco, migrations, dados e
+contas de teste, portas só em `127.0.0.1`, e a URL conferida antes de entregar.
+Só local, nunca publica nada.
+
+```
+/rm:build
+/rm:build status
+/rm:build down
+```
+
+Detalhes: [docs/build.md](docs/build.md).
 
 ## security-validation
 

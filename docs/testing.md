@@ -242,3 +242,27 @@ direto para `shell_exec`, foi travado pelo antivírus da máquina logo depois de
 criado: o arquivo existe e ninguém consegue lê-lo. O caso foi reescrito uma vez,
 com o valor passando por um método, e essa versão é legível. Quem rodar os
 fixtures em outra máquina pode esbarrar no mesmo bloqueio.
+
+## develop
+
+**Só verificação estrutural.** O plugin valida, o `SKILL.md` tem o bloco de
+regras inegociáveis e o nome passa no teste de nomes. Os cinco cenários estão
+em [evals/develop/evals.json](../evals/develop/evals.json): sem documento de
+requisitos, MVP de um projeto novo, decisão em aberto que bloqueia a fase,
+contradição encontrada no meio da construção e fase retomada pela metade.
+Nenhum foi executado, pelo mesmo bloqueio de autenticação do CLI.
+
+## build
+
+**O template foi validado, mas não levantado.**
+
+| Verificação | Resultado |
+| --- | --- |
+| Tags de imagem citadas (`php:8.3-apache`, `composer:2`, `mysql:8.4`, `postgres:17`, `redis:7.4`, `node:22`, `python:3.13`, `axllent/mailpit:v1.21`) | todas existem no Docker Hub em 15/10/2026 |
+| `docker compose config` no template PHP/Laravel, num projeto de teste | válido; as duas portas publicadas em `127.0.0.1`; healthcheck do MySQL montado |
+| Mesmo comando sem `COMPOSE_PROJECT_NAME` | recusado com a mensagem do template |
+
+O que falta: subir o template de verdade (`up`, healthcheck, conexão da
+aplicação com o banco, resposta da URL). O Docker Desktop estava fechado e a
+decisão foi não testar agora. Os seis cenários de comportamento estão em
+[evals/build/evals.json](../evals/build/evals.json).
