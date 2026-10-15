@@ -60,8 +60,8 @@ if (( ${#documentationFiles[@]} == 0 )); then
 fi
 
 outputDirectory="dist"
-packageDirectory="$outputDirectory/rm-skill-claude"
-archiveName="rm-skill-claude-v$version.zip"
+packageDirectory="$outputDirectory/crow"
+archiveName="crow-v$version.zip"
 
 rm -rf -- "$outputDirectory"
 mkdir -p "$packageDirectory/docs"
@@ -72,7 +72,7 @@ cp "${documentationFiles[@]}" "$packageDirectory/docs/"
 
 (
     cd "$outputDirectory"
-    zip -q -r "$archiveName" rm-skill-claude
+    zip -q -r "$archiveName" crow
     sha256sum "$archiveName" > "$archiveName.sha256"
 )
 
