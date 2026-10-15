@@ -42,17 +42,25 @@ default or skill text.
 
 1. **No request?** If the line above is empty, your first question is what he
    wants built, as an open question.
-2. **Resume, do not restart.** Look for `docs/requirements/` in the current
-   project. If a document for this same request is there, read it, rebuild the
-   coverage from it, and continue from its open decisions.
-3. **Read before asking.** If you are inside a repository, read what already
-   answers questions: `README`, `CLAUDE.md` / `AGENTS.md`, dependency manifests
+2. **Context first.** `/rm:context` is meant to run before this skill. If the
+   project has no `CONTEXT.md` and no `.context/`, say in one line that running
+   `/rm:context` first lets another model pick the interview up if the tokens
+   run out — then carry on; do not wait for it.
+3. **Resume, do not restart.** Two places can hold an interview already under
+   way: `.context/HANDOFF.md`, whose "Skill em andamento" section holds the
+   coverage ledger when `/rm:context save` ran mid-interview, and
+   `docs/requirements/`, when a document for this same request was written.
+   Rebuild the coverage from whichever exists — the handoff when both do, it is
+   newer — and continue from the next open item or open decision.
+4. **Read before asking.** If you are inside a repository, read what already
+   answers questions: `README`, `CONTEXT.md`, `ARCHITECTURE.md`, `CLAUDE.md` /
+   `AGENTS.md`, dependency manifests
    (`composer.json`, `package.json`, `*.csproj`, `requirements.txt`…), the
    schema or migrations, `docs/`. Never ask what the code already says.
-4. **Load the checklist.** Read
+5. **Load the checklist.** Read
    [references/coverage-checklist.md](references/coverage-checklist.md). It is
    the definition of "100% covered" — every item in it gets a state.
-5. **Open** with two or three lines saying how you understood the request and
+6. **Open** with two or three lines saying how you understood the request and
    what you found in the repository, then ask the first question.
 
 ## The interview
