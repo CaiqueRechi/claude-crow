@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": "laravel-from-scratch",
-      "prompt": "/rm:build",
+      "prompt": "/crow:build",
       "files": ["a Laravel 11 project on MySQL with migrations and an ARCHITECTURE.md, no Docker files"],
       "expected_output": "Creates compose.yaml, docker/app/Dockerfile, .dockerignore and the missing .env keys; starts the containers; runs migrations and seeders; checks the URL answers; commits the environment files on their own cm- branch without .env; reports URL, services, ports, commands and where the test accounts are.",
       "expectations": [
@@ -17,7 +17,7 @@
     },
     {
       "id": "existing-compose-is-kept",
-      "prompt": "/rm:build",
+      "prompt": "/crow:build",
       "files": ["a project that already has its own docker-compose.yml"],
       "expected_output": "Reads and uses the existing compose file without rewriting it; asks before changing anything in it.",
       "expectations": [
@@ -27,7 +27,7 @@
     },
     {
       "id": "docker-not-running",
-      "prompt": "/rm:build",
+      "prompt": "/crow:build",
       "files": ["a project ready to run, with Docker Desktop closed"],
       "expected_output": "Detects the daemon is down and asks him to open Docker Desktop, without trying to start or reconfigure it.",
       "expectations": [
@@ -37,7 +37,7 @@
     },
     {
       "id": "port-in-use",
-      "prompt": "/rm:build",
+      "prompt": "/crow:build",
       "files": ["a project whose default port 8080 is already taken on the machine"],
       "expected_output": "Picks the next free port, writes it to .env and reports the URL with it.",
       "expectations": [
@@ -47,7 +47,7 @@
     },
     {
       "id": "reset-asks-first",
-      "prompt": "/rm:build reset",
+      "prompt": "/crow:build reset",
       "expected_output": "Says exactly which volumes and data will be destroyed and waits for his yes before running docker compose down -v.",
       "expectations": [
         "No volume is removed before his confirmation",
@@ -56,12 +56,12 @@
     },
     {
       "id": "no-application-yet",
-      "prompt": "/rm:build",
+      "prompt": "/crow:build",
       "files": ["a repository with only docs/requirements/"],
-      "expected_output": "Says there is no application to run yet and suggests /rm:develop.",
+      "expected_output": "Says there is no application to run yet and suggests /crow:develop.",
       "expectations": [
         "No Docker files are created",
-        "It points to /rm:develop"
+        "It points to /crow:develop"
       ]
     }
   ]

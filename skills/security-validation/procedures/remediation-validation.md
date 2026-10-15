@@ -18,7 +18,7 @@ proposta a ele com o motivo — não feita.
 
 **A skill recomenda; não altera o sistema por conta própria.** Aplicar uma
 correção é uma tarefa separada, que só começa quando ele pedir, e segue as
-convenções dele (`/rm:conventions`): branch própria, commit `fix:` por
+convenções dele (`/crow:conventions`): branch própria, commit `fix:` por
 correção, teste de regressão, nunca coautoria.
 
 Nunca afirmar que uma correção foi aplicada se a skill apenas a recomendou.

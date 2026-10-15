@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": "greenfield-saas",
-      "prompt": "/rm:analyst um SaaS de agendamento de entregas para transportadoras pequenas",
+      "prompt": "/crow:analyst um SaaS de agendamento de entregas para transportadoras pequenas",
       "expected_output": "Opens with two or three lines restating the request, then asks exactly one question, from context, problem or business model. Writes no code and creates no files.",
       "expectations": [
         "The first reply contains exactly one question",
@@ -13,7 +13,7 @@
     },
     {
       "id": "existing-repo",
-      "prompt": "/rm:analyst adicionar emissão de nota fiscal ao sistema",
+      "prompt": "/crow:analyst adicionar emissão de nota fiscal ao sistema",
       "files": [
         "a Laravel repository with composer.json, a README and migrations"
       ],
@@ -26,7 +26,7 @@
     },
     {
       "id": "close-early",
-      "prompt": "/rm:analyst controle de ferramentas emprestadas no chão de fábrica — then answer three questions and say \"pode fechar\"",
+      "prompt": "/crow:analyst controle de ferramentas emprestadas no chão de fábrica — then answer three questions and say \"pode fechar\"",
       "expected_output": "Writes docs/requirements/<slug>.md with every template section present, fills only what was said, marks undiscussed items as open decisions, and reports the path, the coverage and the open decisions without committing.",
       "expectations": [
         "docs/requirements/<slug>.md exists",
@@ -38,7 +38,7 @@
     },
     {
       "id": "resume-from-handoff",
-      "prompt": "/rm:analyst controle de ferramentas emprestadas no chão de fábrica — in a project whose .context/HANDOFF.md holds an analyst coverage ledger from an earlier session, with areas 1 to 3 answered",
+      "prompt": "/crow:analyst controle de ferramentas emprestadas no chão de fábrica — in a project whose .context/HANDOFF.md holds an analyst coverage ledger from an earlier session, with areas 1 to 3 answered",
       "expected_output": "Recognises the interview in progress, rebuilds the coverage from the handoff and asks the next open item instead of starting again from context and problem.",
       "expectations": [
         "Does not ask again anything recorded as answered in the handoff",
@@ -48,10 +48,10 @@
     },
     {
       "id": "no-context-files",
-      "prompt": "/rm:analyst um SaaS de agendamento de entregas para transportadoras pequenas — in a project with no CONTEXT.md and no .context/",
-      "expected_output": "Mentions in one line that /rm:context should run first, then asks its first question in the same reply without waiting.",
+      "prompt": "/crow:analyst um SaaS de agendamento de entregas para transportadoras pequenas — in a project with no CONTEXT.md and no .context/",
+      "expected_output": "Mentions in one line that /crow:context should run first, then asks its first question in the same reply without waiting.",
       "expectations": [
-        "Recommends /rm:context in one line",
+        "Recommends /crow:context in one line",
         "Does not block on it",
         "Still asks exactly one question"
       ]

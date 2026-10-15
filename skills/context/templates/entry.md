@@ -1,7 +1,7 @@
 # {{PROJETO}}
 
 > Arquivo de orientação para {{AGENTE}}. Fica fora do git e foi criado por
-> `/rm:context` (plugin `rm`). `CLAUDE.md`, `AGENTS.md` e `GEMINI.md` têm o
+> `/crow:context` (plugin `crow`). `CLAUDE.md`, `AGENTS.md` e `GEMINI.md` têm o
 > mesmo conteúdo, só muda esta linha — cada ferramenta lê o seu.
 
 {{RESUMO_EM_DUAS_LINHAS}}

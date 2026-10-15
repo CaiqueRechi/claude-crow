@@ -1,6 +1,6 @@
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a

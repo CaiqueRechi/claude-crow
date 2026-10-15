@@ -1,6 +1,6 @@
 ---
 name: context
-description: Prepares a project so work survives the end of a session — another model, another harness (Codex, Cursor, Gemini, Copilot) or a new chat continues exactly where the last one stopped, and agents can leave each other messages. Creates only the missing files among CLAUDE.md, AGENTS.md, GEMINI.md, CONTEXT.md, ARCHITECTURE.md, TASKS.md and .context/, keeps all of them out of git, and saves or resumes the state on demand. Runs only when he calls /rm:context, /rm:context save, /rm:context resume or /rm:context message.
+description: Prepares a project so work survives the end of a session — another model, another harness (Codex, Cursor, Gemini, Copilot) or a new chat continues exactly where the last one stopped, and agents can leave each other messages. Creates only the missing files among CLAUDE.md, AGENTS.md, GEMINI.md, CONTEXT.md, ARCHITECTURE.md, TASKS.md and .context/, keeps all of them out of git, and saves or resumes the state on demand. Runs only when he calls /crow:context, /crow:context save, /crow:context resume or /crow:context message.
 argument-hint: "[prepare | save | resume | message <to> <text>]"
 disable-model-invocation: true
 ---
@@ -25,7 +25,7 @@ Files are written in Portuguese, the language he reads.
 
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a
@@ -100,14 +100,14 @@ ruled out. Everything else carries on meanwhile.
    whether it is tracked. A file that already exists is read and used as
    context — never regenerated, never "improved", never reformatted.
 2. **Read the project** before writing anything: README, dependency manifests,
-   `docs/` (in particular `docs/requirements/`, where `/rm:analyst` leaves the
+   `docs/` (in particular `docs/requirements/`, where `/crow:analyst` leaves the
    requirements document), schema or migrations, CI files, `git log
    --oneline -20`, current branch, `git status`. Fill the new files from what
    you read. When an analyst document exists, CONTEXT.md and ARCHITECTURE.md
    come from it.
 3. **Do not guess.** Anything you could not read stays as `> A preencher: <what
    is missing>`. List those gaps in the report; for a project with no
-   requirements yet, suggest `/rm:analyst` rather than interviewing him here.
+   requirements yet, suggest `/crow:analyst` rather than interviewing him here.
 4. **Create the missing files** from the templates. `.context/CONVENTIONS.md`
    is the body of the conventions skill — everything after its frontmatter —
    under a first line saying where and when it was copied.

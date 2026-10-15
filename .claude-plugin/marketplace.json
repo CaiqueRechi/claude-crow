@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "rm",
+      "name": "crow",
       "source": "./",
       "description": "Caique Rechi Mehret's skills for Claude Code: his working conventions and the tools built on them."
     }

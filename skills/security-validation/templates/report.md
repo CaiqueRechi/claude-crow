@@ -17,7 +17,7 @@ quais controles foram verificados, por quais métodos e com quais limitações.
 - Executado por: <id do agente>
 - Escopo: <ativos avaliados>
 - Ambiente: <desenvolvimento | homologação | produção>
-- Versão da skill: rm <versão do plugin> · security-validation <versão do catálogo>
+- Versão da skill: crow <versão do plugin> · security-validation <versão do catálogo>
 - Referências utilizadas: ASVS 5.0.0 · WSTG v4.2 · ATT&CK Enterprise v20.0 · CWE 4.20 · ATLAS v2026.09 · <CIS Benchmark e versão, se usado> · CISA KEV consultado em <data>
 - Autorização dinâmica: <quem autorizou, alvos, janela, testes permitidos e proibidos — ou "não concedida: só análise estática">
 - Limite de aceitação: <definido pelo responsável — ou "não definido: nenhuma falha aberta é aceita">

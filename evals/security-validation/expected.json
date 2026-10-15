@@ -1,5 +1,5 @@
 {
-  "prompt": "/rm:security-validation evals/security-validation/fixtures/php-app — análise estática apenas, sem autorização dinâmica",
+  "prompt": "/crow:security-validation evals/security-validation/fixtures/php-app — análise estática apenas, sem autorização dinâmica",
   "method": "static",
   "note": "Estados esperados por arquivo para uma validação só estática. Em PASS, os critérios estruturais da regra são demonstrados pelo código; o relatório deve ainda declarar que os testes dinâmicos não foram executados. Os segredos do projeto de teste são de mentira.",
   "cases": [

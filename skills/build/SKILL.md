@@ -1,6 +1,6 @@
 ---
 name: build
-description: Builds a local environment where he can open and test the project — Docker Compose on his machine only, with the database and services the architecture needs, test data and test accounts, ports bound to localhost, and a URL that was checked before it is handed over. Creates only the environment files that are missing, never deploys and never touches anything outside the project. Runs only when he calls /rm:build, /rm:build up, /rm:build down or /rm:build status.
+description: Builds a local environment where he can open and test the project — Docker Compose on his machine only, with the database and services the architecture needs, test data and test accounts, ports bound to localhost, and a URL that was checked before it is handed over. Creates only the environment files that are missing, never deploys and never touches anything outside the project. Runs only when he calls /crow:build, /crow:build up, /crow:build down or /crow:build status.
 argument-hint: "[up | down | status | reset]"
 disable-model-invocation: true
 ---
@@ -24,7 +24,7 @@ language he writes in.
 
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a
@@ -51,7 +51,7 @@ and version, and only the extras the architecture names (cache, queue worker,
 mail catcher, search). Nothing the project does not use.
 
 No application code yet? Then there is nothing to run: say so and suggest
-`/rm:develop` first.
+`/crow:develop` first.
 
 [references/stacks.md](references/stacks.md) has the pattern for each common
 stack; [templates/php-laravel/](templates/php-laravel/) is the full set for

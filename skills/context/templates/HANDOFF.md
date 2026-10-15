@@ -1,7 +1,7 @@
 # Handoff
 
 > Salvo em {{AAAA-MM-DD HH:MM}} por {{ID_DO_AGENTE}}. Substituído a cada
-> `/rm:context save`. Fora do git.
+> `/crow:context save`. Fora do git.
 
 ## Onde parou
 
@@ -35,9 +35,9 @@
 
 ## Skill em andamento
 
-*Vazio quando nenhuma. Numa entrevista do `/rm:analyst`: cada item da
+*Vazio quando nenhuma. Numa entrevista do `/crow:analyst`: cada item da
 checklist com seu estado (aberto, inferido, respondido, não se aplica,
-adiado) e as respostas dadas até aqui. Numa fase do `/rm:develop`: documento,
+adiado) e as respostas dadas até aqui. Numa fase do `/crow:develop`: documento,
 fase, branch, cada `RF` da fase com seu estado (feito, em andamento, a fazer,
-bloqueado) e o próximo `RF`. Numa validação do `/rm:security-validation`: fase
+bloqueado) e o próximo `RF`. Numa validação do `/crow:security-validation`: fase
 atual, escopo autorizado, regras já executadas com seus estados.*

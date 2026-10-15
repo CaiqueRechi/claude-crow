@@ -16,8 +16,8 @@ manifestField() {
         "./.claude-plugin/plugin.json" "$1"
 }
 
-if [[ "$(manifestField name)" != "rm" ]]; then
-    echo ".claude-plugin/plugin.json must declare name: rm." >&2
+if [[ "$(manifestField name)" != "crow" ]]; then
+    echo ".claude-plugin/plugin.json must declare name: crow." >&2
     exit 1
 fi
 

@@ -112,7 +112,7 @@ mudar essa regra, e com que frequência ela muda?"
 | Item | Covered when you know |
 | --- | --- |
 | 10.1 Team | who builds and maintains it, their size and stack experience |
-| 10.2 Repository and process | where the code lives, branching, review — default to `/rm:conventions` |
+| 10.2 Repository and process | where the code lives, branching, review — default to `/crow:conventions` |
 | 10.3 Tests | levels expected (unit, feature, browser) and what must never break |
 | 10.4 CI/CD | pipeline that exists or must be built |
 | 10.5 Documentation | where technical and user documentation lives |

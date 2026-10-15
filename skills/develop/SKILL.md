@@ -1,6 +1,6 @@
 ---
 name: develop
-description: Implements what the analyst documented. Reads the requirements document in docs/requirements/, then builds the project one phase at a time — MVP first — turning each functional requirement into code with its tests, following his conventions (cm- branch, one commit per change, tests, security check, docs commit, no push), and stops at the end of every phase for his review. Never invents a requirement the document does not have. Runs only when he calls /rm:develop.
+description: Implements what the analyst documented. Reads the requirements document in docs/requirements/, then builds the project one phase at a time — MVP first — turning each functional requirement into code with its tests, following his conventions (cm- branch, one commit per change, tests, security check, docs commit, no push), and stops at the end of every phase for his review. Never invents a requirement the document does not have. Runs only when he calls /crow:develop.
 argument-hint: "[documento ou fase]"
 disable-model-invocation: true
 ---
@@ -9,13 +9,13 @@ disable-model-invocation: true
 
 Arguments: $ARGUMENTS
 
-You turn the requirements document written by `/rm:analyst` into working,
+You turn the requirements document written by `/crow:analyst` into working,
 tested code. The document is the contract: you build what it says, the way it
 says, and nothing it does not say. Talk to him in the language he writes in.
 
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a
@@ -49,7 +49,7 @@ you tell him.
 
 1. **Find the document.** `$ARGUMENTS` may name it or a phase. Otherwise look
    in `docs/requirements/`: one document → use it; several → ask which; none →
-   stop and say the input is missing, suggesting `/rm:analyst`. Do not build
+   stop and say the input is missing, suggesting `/crow:analyst`. Do not build
    from a chat description instead — that is exactly the work the analyst
    exists to do.
 2. **Read everything that frames the work:** the whole requirements document,
@@ -93,7 +93,7 @@ does not name a stack, that is a blocker from step 3.
    slot in the past`).
 4. Run them and the tests the change affects. Never move on with a red test,
    and never call something done without having seen it pass. If you cannot
-   run them — no runtime, no database — say so; `/rm:build` gives a local
+   run them — no runtime, no database — say so; `/crow:build` gives a local
    environment, and tests then run inside it.
 5. Do the security check the conventions require: bots creating records, XSS,
    anything sensitive exposed — plus whatever `RNF` of security the document
@@ -109,7 +109,7 @@ for anti-automation — and get a test or a measurement when one is possible.
 two rules that contradict, a case no rule covers, an `RF` that cannot be met
 as written. Do not invent the answer and do not quietly pick one. Stop that
 requirement, ask him, and once he decides, note that the requirements document
-needs the same update — suggest `/rm:analyst` to record it, or update the
+needs the same update — suggest `/crow:analyst` to record it, or update the
 document yourself in its own `docs:` commit if he asks.
 
 **Never add scope.** Something useful the document does not ask for is a
@@ -129,8 +129,8 @@ built.
 4. Stop. Report by topic: what was built (each `RF` and its state), test
    results as seen, the security check, decisions taken on the way, what is
    left for the next phase, and the branch ready for him to review and push.
-   Suggest `/rm:context save` so another session can continue, `/rm:build` if
-   there is no local environment yet, and `/rm:security-validation` before the
+   Suggest `/crow:context save` so another session can continue, `/crow:build` if
+   there is no local environment yet, and `/crow:security-validation` before the
    phase is merged.
 
-The next phase starts only when he calls `/rm:develop` again.
+The next phase starts only when he calls `/crow:develop` again.

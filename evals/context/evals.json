@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": "prepare-fresh-repo",
-      "prompt": "/rm:context",
+      "prompt": "/crow:context",
       "files": ["a small git repository with a README, composer.json and one commit, none of the context files"],
       "expected_output": "Creates CLAUDE.md, AGENTS.md, GEMINI.md, CONTEXT.md, ARCHITECTURE.md, TASKS.md and .context/ (CONVENTIONS.md, HANDOFF.md, sessions/, messages/), filled from what it read, with gaps marked 'A preencher'. Adds the seven entries to .git/info/exclude. git status shows nothing new.",
       "expectations": [
@@ -16,7 +16,7 @@
     },
     {
       "id": "prepare-is-idempotent",
-      "prompt": "/rm:context prepare — run twice; between the runs, edit TASKS.md by hand and delete CONTEXT.md and GEMINI.md",
+      "prompt": "/crow:context prepare — run twice; between the runs, edit TASKS.md by hand and delete CONTEXT.md and GEMINI.md",
       "expected_output": "The second run recreates only CONTEXT.md and GEMINI.md, leaves TASKS.md byte-identical with the manual edit, adds no duplicate line to .git/info/exclude, and reports criados / já existiam (mantidos).",
       "expectations": [
         "Only the two deleted files are created",
@@ -27,7 +27,7 @@
     },
     {
       "id": "tracked-file-is-left-alone",
-      "prompt": "/rm:context",
+      "prompt": "/crow:context",
       "files": ["a git repository that already commits its own CLAUDE.md"],
       "expected_output": "Does not edit or exclude CLAUDE.md, creates the other missing files, and asks how to proceed with CLAUDE.md.",
       "expectations": [
@@ -38,7 +38,7 @@
     },
     {
       "id": "save-then-resume-elsewhere",
-      "prompt": "/rm:context save at the end of a session that left one test failing; then, in a fresh session, /rm:context resume",
+      "prompt": "/crow:context save at the end of a session that left one test failing; then, in a fresh session, /crow:context resume",
       "expected_output": "save writes a HANDOFF with branch, last commit, uncommitted files and one concrete next action, appends the session log and moves finished tasks. resume reads it, checks it against git, summarises where it stopped and continues with that next action.",
       "expectations": [
         "HANDOFF names exactly one concrete next action",
@@ -50,7 +50,7 @@
     },
     {
       "id": "message-between-agents",
-      "prompt": "/rm:context message codex-gpt-5 o teste de agendamento ainda falha no fuso de Manaus; então, numa sessão do Codex lendo AGENTS.md, retomar",
+      "prompt": "/crow:context message codex-gpt-5 o teste de agendamento ainda falha no fuso de Manaus; então, numa sessão do Codex lendo AGENTS.md, retomar",
       "expected_output": "Creates one file in .context/messages/ with from, to, date and status new. The next agent reading AGENTS.md finds it, acts on it and sets status to read.",
       "expectations": [
         "One new file per message, named <YYYYMMDD-HHMMSS>-<from>-to-<to>.md",

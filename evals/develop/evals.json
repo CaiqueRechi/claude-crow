@@ -3,18 +3,18 @@
   "evals": [
     {
       "id": "no-requirements-document",
-      "prompt": "/rm:develop um sistema de agendamento de entregas",
+      "prompt": "/crow:develop um sistema de agendamento de entregas",
       "files": ["a repository with no docs/requirements/ folder"],
-      "expected_output": "Stops before writing code, says the requirements document is missing and suggests /rm:analyst.",
+      "expected_output": "Stops before writing code, says the requirements document is missing and suggests /crow:analyst.",
       "expectations": [
         "No code, branch or commit is created",
-        "It points to /rm:analyst",
+        "It points to /crow:analyst",
         "It does not start building from the chat description"
       ]
     },
     {
       "id": "mvp-of-a-new-project",
-      "prompt": "/rm:develop",
+      "prompt": "/crow:develop",
       "files": ["an empty folder with docs/requirements/agendamento-entregas.md naming Laravel 11, MySQL and an MVP of three RFs"],
       "expected_output": "Shows the phase plan, initialises the repository on main, commits the skeleton with one passing test, creates cm-agendamento-entregas-mvp, implements the three RFs in dependency order with tests, writes the traceability record, commits docs last, and stops without pushing.",
       "expectations": [
@@ -29,7 +29,7 @@
     },
     {
       "id": "blocking-open-decision",
-      "prompt": "/rm:develop",
+      "prompt": "/crow:develop",
       "files": ["docs/requirements/estoque.md whose open decisions leave the database undefined"],
       "expected_output": "Asks him to decide the database before writing any code, with a recommendation, one question.",
       "expectations": [
@@ -39,7 +39,7 @@
     },
     {
       "id": "contradiction-found-while-building",
-      "prompt": "/rm:develop — the document has RN-02 'cancelamento até 24h antes' and RN-07 'cancelamento até 48h antes' for the same entity",
+      "prompt": "/crow:develop — the document has RN-02 'cancelamento até 24h antes' and RN-07 'cancelamento até 48h antes' for the same entity",
       "expected_output": "Stops the affected RF, quotes both rules and asks which holds; does not pick one; notes the requirements document needs the same fix.",
       "expectations": [
         "Both rules are quoted",
@@ -49,7 +49,7 @@
     },
     {
       "id": "resume-half-done-phase",
-      "prompt": "/rm:develop",
+      "prompt": "/crow:develop",
       "files": [".context/HANDOFF.md saying the MVP stopped after RF-02 of four, branch cm-agendamento-entregas-mvp"],
       "expected_output": "Resumes on the same branch at RF-03 without redoing RF-01 and RF-02.",
       "expectations": [

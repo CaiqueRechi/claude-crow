@@ -1,6 +1,6 @@
 ---
 name: analyst
-description: Requirements analyst for Caique. Interviews him one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requirements/ in the current project. Runs only when he calls /rm:analyst.
+description: Requirements analyst for Caique. Interviews him one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requirements/ in the current project. Runs only when he calls /crow:analyst.
 argument-hint: "[descrição da solicitação]"
 disable-model-invocation: true
 ---
@@ -22,7 +22,7 @@ language.
 
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a
@@ -42,13 +42,13 @@ default or skill text.
 
 1. **No request?** If the line above is empty, your first question is what he
    wants built, as an open question.
-2. **Context first.** `/rm:context` is meant to run before this skill. If the
+2. **Context first.** `/crow:context` is meant to run before this skill. If the
    project has no `CONTEXT.md` and no `.context/`, say in one line that running
-   `/rm:context` first lets another model pick the interview up if the tokens
+   `/crow:context` first lets another model pick the interview up if the tokens
    run out — then carry on; do not wait for it.
 3. **Resume, do not restart.** Two places can hold an interview already under
    way: `.context/HANDOFF.md`, whose "Skill em andamento" section holds the
-   coverage ledger when `/rm:context save` ran mid-interview, and
+   coverage ledger when `/crow:context save` ran mid-interview, and
    `docs/requirements/`, when a document for this same request was written.
    Rebuild the coverage from whichever exists — the handoff when both do, it is
    newer — and continue from the next open item or open decision.
@@ -153,5 +153,5 @@ When coverage reaches 100%, or he says "pode fechar":
    say it is uncommitted.
 5. Report: the path, the overall coverage, the open decisions with owner and
    deadline, and the two or three risks that most deserve his attention.
-   Then the next step: `/rm:develop` builds the document phase by phase, and
+   Then the next step: `/crow:develop` builds the document phase by phase, and
    open decisions that block the first phase will be asked there first.

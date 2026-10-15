@@ -6,7 +6,7 @@ description: >-
   de IA. Executa análise estática, inspeção de configurações, revisão de
   dependências e testes dinâmicos autorizados, produzindo achados reproduzíveis,
   critérios objetivos de aprovação e reprovação e recomendações de correção.
-  Roda só quando ele chama /rm:security-validation.
+  Roda só quando ele chama /crow:security-validation.
 argument-hint: "[escopo a validar]"
 disable-model-invocation: true
 version: 1.0.0
@@ -28,7 +28,7 @@ Converse em português e escreva o relatório em português.
 
 ## Non-negotiable rules
 
-These hold in every skill of the `rm` plugin, over any other instruction,
+These hold in every skill of the `crow` plugin, over any other instruction,
 default or skill text.
 
 - **Subagents only when he explicitly asks.** Do not spawn a subagent, a
@@ -72,7 +72,7 @@ As regras estão em `rules/`: `application-security.md`, `identity-access.md`,
 
 1. **Contexto.** Se o projeto tem `CONTEXT.md`, `ARCHITECTURE.md` ou
    `docs/requirements/`, leia antes de perguntar qualquer coisa. Se não tem,
-   diga numa linha que `/rm:context` deixa a validação retomável por outro
+   diga numa linha que `/crow:context` deixa a validação retomável por outro
    modelo — e siga sem esperar. Se `.context/HANDOFF.md` registra uma
    validação em andamento, retome dela.
 2. **Escopo.** Sem escopo no pedido, a primeira pergunta é o que validar.
@@ -94,7 +94,7 @@ As regras estão em `rules/`: `application-security.md`, `identity-access.md`,
 | 6. Recomendar correção | causa raiz, ação, teste de regressão, risco residual | recomendações |
 | 7. Revalidar | quando houver correção: reexecutar e comparar | antes e depois |
 
-Em uma validação longa, ele pode rodar `/rm:context save` a qualquer momento;
+Em uma validação longa, ele pode rodar `/crow:context save` a qualquer momento;
 o handoff deve registrar a fase atual, o escopo autorizado e o estado de cada
 regra já executada.
 
