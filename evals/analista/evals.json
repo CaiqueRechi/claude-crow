@@ -1,0 +1,38 @@
+{
+  "skill_name": "analista",
+  "evals": [
+    {
+      "id": "greenfield-saas",
+      "prompt": "/rm:analista um SaaS de agendamento de entregas para transportadoras pequenas",
+      "expected_output": "Opens with two or three lines restating the request, then asks exactly one question, from context, problem or business model. Writes no code and creates no files.",
+      "expectations": [
+        "The first reply contains exactly one question",
+        "The first question is about context, problem or business model",
+        "No file is created and no code is written"
+      ]
+    },
+    {
+      "id": "existing-repo",
+      "prompt": "/rm:analista adicionar emissão de nota fiscal ao sistema",
+      "files": ["a Laravel repository with composer.json, a README and migrations"],
+      "expected_output": "Reads the repository before asking, does not ask which stack or database is used, and lists what it inferred so it can be confirmed in a single question.",
+      "expectations": [
+        "Does not ask about the language, framework or database the repository already shows",
+        "Marks repository facts as inferred, not as covered",
+        "Asks exactly one question per reply"
+      ]
+    },
+    {
+      "id": "close-early",
+      "prompt": "/rm:analista controle de ferramentas emprestadas no chão de fábrica — then answer three questions and say \"pode fechar\"",
+      "expected_output": "Writes docs/requisitos/<slug>.md with every template section present, fills only what was said, marks undiscussed items as open decisions, and reports the path, the coverage and the open decisions without committing.",
+      "expectations": [
+        "docs/requisitos/<slug>.md exists",
+        "All sixteen template sections are present",
+        "Nothing he did not say appears as a decision",
+        "The open decisions section lists the undiscussed areas",
+        "No branch or commit is created"
+      ]
+    }
+  ]
+}
