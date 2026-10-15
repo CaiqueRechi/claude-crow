@@ -14,7 +14,9 @@
     {
       "id": "existing-repo",
       "prompt": "/rm:analyst adicionar emissão de nota fiscal ao sistema",
-      "files": ["a Laravel repository with composer.json, a README and migrations"],
+      "files": [
+        "a Laravel repository with composer.json, a README and migrations"
+      ],
       "expected_output": "Reads the repository before asking, does not ask which stack or database is used, and lists what it inferred so it can be confirmed in a single question.",
       "expectations": [
         "Does not ask about the language, framework or database the repository already shows",
@@ -32,6 +34,26 @@
         "Nothing he did not say appears as a decision",
         "The open decisions section lists the undiscussed areas",
         "No branch or commit is created"
+      ]
+    },
+    {
+      "id": "resume-from-handoff",
+      "prompt": "/rm:analyst controle de ferramentas emprestadas no chão de fábrica — in a project whose .context/HANDOFF.md holds an analyst coverage ledger from an earlier session, with areas 1 to 3 answered",
+      "expected_output": "Recognises the interview in progress, rebuilds the coverage from the handoff and asks the next open item instead of starting again from context and problem.",
+      "expectations": [
+        "Does not ask again anything recorded as answered in the handoff",
+        "The first question comes from an area still open",
+        "States that it resumed from the handoff"
+      ]
+    },
+    {
+      "id": "no-context-files",
+      "prompt": "/rm:analyst um SaaS de agendamento de entregas para transportadoras pequenas — in a project with no CONTEXT.md and no .context/",
+      "expected_output": "Mentions in one line that /rm:context should run first, then asks its first question in the same reply without waiting.",
+      "expectations": [
+        "Recommends /rm:context in one line",
+        "Does not block on it",
+        "Still asks exactly one question"
       ]
     }
   ]
