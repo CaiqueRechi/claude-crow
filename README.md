@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Claude Crow" width="480">
+</p>
+
 # rm-skill-claude
 
 Plugin `crow` do Claude Code: as minhas skills num lugar só. Cada skill vira um
