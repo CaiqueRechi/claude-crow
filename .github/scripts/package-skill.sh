@@ -67,7 +67,7 @@ rm -rf -- "$outputDirectory"
 mkdir -p "$packageDirectory/docs"
 
 cp README.md VERSION "$packageDirectory/"
-cp -R .claude-plugin skills "$packageDirectory/"
+cp -R .claude-plugin skills assets "$packageDirectory/"
 cp "${documentationFiles[@]}" "$packageDirectory/docs/"
 
 (
