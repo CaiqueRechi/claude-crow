@@ -24,8 +24,17 @@ Full set in [../templates/php-laravel/](../templates/php-laravel/):
   `bcmath`…) and Composer copied from `composer:2`.
 - Inside the container, `DB_HOST` is the service name (`db`), not `127.0.0.1`.
 - Prepare: `composer install`, `php artisan key:generate` when `APP_KEY` is
-  empty, `php artisan migrate --seed`.
-- Tests: `php artisan test`.
+  empty, `php artisan migrate --seed`, then
+  `chown -R www-data:www-data storage bootstrap/cache` — the bind-mounted files
+  belong to his Linux user, and Apache runs as `www-data`.
+- Tests: `php artisan test`, inside the container only.
+- Tests that execute JavaScript need Node in the application image. Only after
+  his yes, add it to `docker/app/Dockerfile` from the official image, in the
+  same version as the project's Node service:
+
+  ```dockerfile
+  COPY --from=node:22-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+  ```
 
 ## PostgreSQL instead of MySQL
 

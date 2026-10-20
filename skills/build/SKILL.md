@@ -127,7 +127,19 @@ Take stock first: `compose.yaml` (or `docker-compose.yml`), `docker/`,
    with one account per role in the requirements document and fictitious
    data. Their credentials are local test values: keep them in the seeder or
    `.env.example`, point him there, and do not repeat them in the chat.
-4. Run the test suite once inside the container, if there is one.
+4. **Files the web server writes** belong to its user inside the container —
+   for Laravel, `chown -R www-data:www-data storage bootstrap/cache`. Without
+   it the server cannot write logs or compiled views and pages answer 500.
+5. Run the test suite once inside the container, if there is one — **only
+   there**, never with the host's runtime against the same folder: a host PHP
+   compiling views into `storage/` leaves files the container cannot touch.
+   If that already happened, clear them inside the container
+   (`php artisan view:clear`).
+6. **Tests that run Node** need Node in the application image. If it is
+   missing, propose adding it — copied from the official image, in the same
+   version as the project's Node service — and add it only after his yes; in a
+   project with its own Dockerfile, ask before touching it. Without his yes,
+   report which tests could not run and why.
 
 ### 6. Check before handing it over
 
