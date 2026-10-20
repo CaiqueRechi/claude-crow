@@ -267,3 +267,24 @@ O que falta: subir o template de verdade (`up`, healthcheck, conexão da
 aplicação com o banco, resposta da URL). O Docker Desktop estava fechado e a
 decisão foi não testar agora. Os seis cenários de comportamento estão em
 [evals/build/evals.json](../evals/build/evals.json).
+
+### WSL, lentidão e Docker Desktop (1.1.0)
+
+**As regras vêm de um caso real; a skill com elas ainda não rodou.**
+
+O que foi medido veio do relatório do ambiente da Engenharia do Hub Ibiporã
+(2026-10-19), feito à mão antes de virar regra: `/login` de 4–18 s no NTFS
+para ~0,05 s no WSL, `npm run build` de 14,5 s para 3,5 s, suíte de 4.871
+testes de mais de 1 h para 473 s, e o Docker Desktop recuperado sem perda
+depois do aviso de assinatura. Ficou de fora da skill o que era só daquele
+projeto (nomes, portas, contas, o `dllhost.exe`, `SESSION_ENCRYPT`).
+
+| Verificação | Resultado |
+| --- | --- |
+| `npm test` | 10 de 10 passando |
+| `evals/build/evals.json` | JSON válido; seis cenários novos: migração do NTFS com o volume preservado, trabalho não commitado parando a mudança, preparo do WSL passo a passo, URL lenta diagnosticada, restart listando o que para, reset recusado mesmo oferecido |
+
+O que falta, e é o aceite da 1.1.0: um `/crow:build` real num projeto Laravel
+no Windows, rodado por ele, conferindo o projeto em `~/projects/<pasta>`, a
+mediana do `/login` abaixo de 1 s, os volumes preservados e a pasta antiga
+intacta. Os cenários novos também não foram executados por um agente.
