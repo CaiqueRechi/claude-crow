@@ -1,7 +1,7 @@
 {
-  "name": "rm-skill-claude",
+  "name": "claude-crow",
   "private": true,
-  "description": "Development checks for the rm plugin. Not shipped in the release package.",
+  "description": "Development checks for the claude-crow plugin. Not shipped in the release package.",
   "type": "module",
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\""

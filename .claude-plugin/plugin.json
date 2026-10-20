@@ -1,9 +1,9 @@
 {
   "name": "crow",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Caique Rechi Mehret's skills for Claude Code: his working conventions and the tools built on them.",
   "author": {
     "name": "Caique Rechi Mehret"
   },
-  "repository": "https://github.com/CaiqueRechi/rm-skill-claude"
+  "repository": "https://github.com/CaiqueRechi/claude-crow"
 }

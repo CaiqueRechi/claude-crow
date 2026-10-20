@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="Claude Crow" width="480">
 </p>
 
-# rm-skill-claude
+# claude-crow
 
 Plugin `crow` do Claude Code: as minhas skills num lugar só. Cada skill vira um
 comando com o prefixo do plugin.
@@ -140,24 +140,44 @@ O repositório é ao mesmo tempo o plugin e um marketplace com ele dentro. Dentr
 do Claude Code:
 
 ```
-/plugin marketplace add CaiqueRechi/rm-skill-claude
-/plugin install crow@rm-skill-claude
+/plugin marketplace add CaiqueRechi/claude-crow
+/plugin install crow@claude-crow
 ```
 
 Ou pelo terminal:
 
 ```bash
-claude plugin marketplace add CaiqueRechi/rm-skill-claude
+claude plugin marketplace add CaiqueRechi/claude-crow
 ```
 
 ```bash
-claude plugin install crow@rm-skill-claude
+claude plugin install crow@claude-crow
 ```
 
+Os nomes: o repositório e o marketplace são `claude-crow`, o plugin é `crow`.
+
 Para usar um clone local em vez do GitHub — útil enquanto uma skill está sendo
-escrita — passe o caminho da pasta no lugar de `CaiqueRechi/rm-skill-claude`.
+escrita — passe o caminho da pasta no lugar de `CaiqueRechi/claude-crow`.
 Para testar sem instalar, `claude --plugin-dir <caminho do clone>` carrega o
 plugin só naquela sessão.
+
+### Vindo do marketplace rm-skill-claude
+
+Até o `crow` 1.1.0 o marketplace se chamava `rm-skill-claude`, e o plugin era
+instalado como `crow@rm-skill-claude`. Para continuar recebendo atualizações,
+troque o marketplace uma vez:
+
+```bash
+claude plugin marketplace remove rm-skill-claude
+```
+
+```bash
+claude plugin marketplace add CaiqueRechi/claude-crow
+```
+
+```bash
+claude plugin install crow@claude-crow
+```
 
 ### Vindo do rm-skill-claude 1.x
 
@@ -167,7 +187,7 @@ mais, e se for atualizada por `git pull` volta a carregar a versão antiga.
 
 ### Instalação por release
 
-As [Releases](https://github.com/CaiqueRechi/rm-skill-claude/releases) oferecem
+As [Releases](https://github.com/CaiqueRechi/claude-crow/releases) oferecem
 um ZIP do plugin e o respectivo checksum SHA-256. Baixe os dois arquivos da
 versão desejada, valide o checksum, extraia o ZIP onde quiser e adicione a
 pasta `crow` extraída como marketplace.
@@ -178,7 +198,7 @@ No Linux:
 sha256sum -c crow-v1.0.0.zip.sha256
 unzip crow-v1.0.0.zip -d ~/plugins
 claude plugin marketplace add ~/plugins/crow
-claude plugin install crow@rm-skill-claude
+claude plugin install crow@claude-crow
 ```
 
 No PowerShell, compare o resultado abaixo com o valor presente no arquivo
@@ -187,8 +207,8 @@ No PowerShell, compare o resultado abaixo com o valor presente no arquivo
 ```powershell
 Get-FileHash .\crow-v1.0.0.zip -Algorithm SHA256
 Expand-Archive .\crow-v1.0.0.zip -DestinationPath "$HOME\plugins"
-claude plugin marketplace add "$HOME\plugins\rm-skill-claude"
-claude plugin install crow@rm-skill-claude
+claude plugin marketplace add "$HOME\plugins\crow"
+claude plugin install crow@claude-crow
 ```
 
 ## Releases
@@ -207,8 +227,8 @@ automaticamente:
 - o pacote `crow-vX.Y.Z.zip`;
 - o checksum `crow-vX.Y.Z.zip.sha256`.
 
-As tags `v1.0.0`, `v1.0.1` e `v1.1.0` são do `rm-skill-claude` antes de virar
-o plugin `crow`; por isso as releases do `crow` usam o prefixo `crow-`.
+As tags `v1.0.0`, `v1.0.1` e `v1.1.0` são da skill avulsa, antes de virar o
+plugin `crow`; por isso as releases do `crow` usam o prefixo `crow-`.
 
 Depois de uma versão publicada, a próxima alteração que deva gerar Release
 precisa atualizar `VERSION` e `plugin.json` juntos.
