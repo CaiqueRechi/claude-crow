@@ -88,7 +88,7 @@ test("every category is canonical", () => {
   }
 });
 
-test("every external reference was verified", () => {
+test("every external reference is present in the verified catalog", () => {
   const references = readText(join(skillRoot, "catalog", "references.md"));
   const verified = backtickedIds(references, /^(CWE-\d+|V\d+\.\d+\.\d+|WSTG-[A-Z]{4}-\d{2}|T\d{4}(\.\d{3})?|AML\.T\d{4}(\.\d{3})?)$/);
   for (const { rule } of rules) {
