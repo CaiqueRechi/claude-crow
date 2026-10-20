@@ -288,3 +288,23 @@ O que falta, e é o aceite da 1.1.0: um `/crow:build` real num projeto Laravel
 no Windows, rodado por ele, conferindo o projeto em `~/projects/<pasta>`, a
 mediana do `/login` abaixo de 1 s, os volumes preservados e a pasta antiga
 intacta. Os cenários novos também não foram executados por um agente.
+
+## Nome claude-crow e política de instalação (1.2.0)
+
+**Verificado por teste e por uma instalação limpa a partir do clone; a
+instalação pelo GitHub com o nome novo só é possível depois do merge.**
+
+| Verificação | Resultado |
+| --- | --- |
+| `npm test` | 12 de 12 passando |
+| Nome antigo fora das seções de migração | o teste novo passa; com um `crow@rm-skill-claude` posto de propósito no README, falhou apontando `README.md:264` |
+| Política idêntica na `develop` e na `build` | o teste novo passa; com uma frase alterada só na `build`, falhou apontando o arquivo |
+| Teste de referências | renomeado para "every external reference is present in the verified catalog", sem mudar o que confere |
+| `package-skill.sh` | passou em todas as validações; o ZIP não foi gerado nesta máquina, que não tem `zip` |
+| Instalação limpa | com `CLAUDE_CONFIG_DIR` num diretório vazio: `claude plugin marketplace add <clone>` registrou o marketplace `claude-crow`; `claude plugin install crow@claude-crow` instalou a 1.2.0, habilitada, com as seis skills |
+| `claude plugin marketplace remove` | o comando existe no Claude Code 2.1.223 (`remove\|rm <name>`); a migração em si não foi executada |
+
+O que falta: `claude plugin marketplace add CaiqueRechi/claude-crow` direto do
+GitHub, que só reflete o nome novo depois do merge, e a migração de uma
+instalação existente pelos três comandos do README. A política de instalação
+é texto de skill: nenhum agente rodou um `up` com ela ainda.

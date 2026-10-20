@@ -27,27 +27,32 @@ descrição no chat não substitui o levantamento.
 3. Mostra o plano da fase: os `RF`, a ordem (por dependência), o que cada um
    toca e o nome da branch. E começa.
 
-## Nada é instalado sem o seu consentimento
+## Nada é baixado nem instalado sem o seu consentimento
 
-Ela não instala nada — pacote, biblioteca, framework, ferramenta, extensão,
-binário ou arquivo baixado — sem você concordar explicitamente com aquele item
-na conversa. Isso inclui:
+A regra é a mesma da `build`, escrita uma vez em
+[.github/installation-policy.md](../.github/installation-policy.md) e copiada
+literalmente nas duas skills — um teste falha se as cópias divergirem. Há dois
+tipos de consentimento:
 
-- adicionar dependência (`composer require`, `npm install <pacote>`,
-  `pip install`, uma linha nova no manifesto);
-- criar projeto por instalador (`composer create-project`, `laravel new`,
-  `npx create-…`);
-- restaurar as dependências que o projeto já declara (`composer install`,
-  `npm ci`) — também baixam código;
-- ferramentas globais, pacotes do sistema, runtimes, extensões;
-- qualquer coisa baixada da rede para ficar ou rodar.
+- **O que o projeto já declara — um sim para a lista inteira.** Baixar as
+  imagens com versão fixa do compose e do Dockerfile, e restaurar dependências
+  de um lockfile que já está no repositório (`composer install` do
+  `composer.lock`, `npm ci` do `package-lock.json`). Antes do primeiro download
+  ela lista tudo, cada imagem com a tag e cada lockfile com o comando, e
+  pergunta uma vez.
+- **O que é novo — um sim por item.** Dependência nova (`composer require`,
+  `npm install <pacote>`, uma linha nova no manifesto), imagem nova ou outra
+  versão, mudança num Dockerfile existente, criar projeto por instalador
+  (`composer create-project`, `laravel new`, `npx create-…`), ferramenta
+  global, pacote do sistema, runtime, extensão e qualquer coisa baixada da rede
+  para ficar ou rodar. Imagem sem versão fixa ou manifesto sem lockfile não
+  contam como declarados: caem aqui. Ela pergunta antes do comando: o que é, a
+  versão exata, de onde vem, por que precisa e qual seria a alternativa sem
+  ele. O seu sim vale para aquele item e aquela versão — não para o próximo
+  pacote nem para um upgrade depois.
 
-Ela pergunta **um item por vez**, antes do comando: o que é, a versão exata,
-de onde vem, por que o requisito precisa dele e qual seria a alternativa sem
-ele. O seu sim vale para aquele item e aquela versão — não para o próximo
-pacote nem para um upgrade depois. Um não fica valendo: ela procura outro
-caminho com o que já existe, ou marca o requisito como `blocked` na
-rastreabilidade.
+Um não fica valendo: ela procura outro caminho com o que já existe, ou marca o
+requisito como `blocked` na rastreabilidade.
 
 Escrever o código do próprio projeto não é instalar e não precisa de
 permissão. Pacote copiado à mão para dentro do repositório continua sendo

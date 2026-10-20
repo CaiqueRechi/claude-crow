@@ -23,15 +23,20 @@ local: nada é publicado, nada sai da máquina.
 3. Cria **só o que falta**: `compose.yaml`, `docker/app/Dockerfile`,
    `.dockerignore`, chaves de `.env` e `.env.example`. Arquivo existente é lido
    e usado, nunca sobrescrito sem perguntar.
-4. Sobe tudo, espera o banco ficar saudável, instala dependências, roda
+4. **Pede um sim só para o que o projeto declara**: antes de baixar, lista
+   cada imagem com a tag e cada lockfile que vai restaurar, e espera o seu
+   ok. Qualquer coisa nova — dependência, imagem, versão, mudança no
+   Dockerfile — é perguntada item a item. É a mesma regra da `develop`, em
+   [.github/installation-policy.md](../.github/installation-policy.md).
+5. Sobe tudo, espera o banco ficar saudável, restaura as dependências, roda
    migrations e seeders, passa `storage/` e `bootstrap/cache` para o
    `www-data` (Laravel) e roda os testes uma vez, só dentro do container.
-5. **Confere a URL** antes de entregar: a página precisa responder, os logs
+6. **Confere a URL** antes de entregar: a página precisa responder, os logs
    precisam estar limpos, e a mediana de cinco requisições precisa ficar em
    até 1 s. Acima disso, ela diagnostica antes de entregar.
-6. Commita os arquivos de ambiente numa branch `cm-` própria — eles fazem parte
+7. Commita os arquivos de ambiente numa branch `cm-` própria — eles fazem parte
    do projeto, quem clonar consegue rodar. O `.env` nunca vai para o git.
-7. Entrega: URL, serviços e portas, resultado da conferência (com a mediana) e
+8. Entrega: URL, serviços e portas, resultado da conferência (com a mediana) e
    dos testes, comandos de uso, onde ficam as contas de teste e, no Windows,
    onde o projeto mora no WSL.
 
