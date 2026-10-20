@@ -9,7 +9,11 @@ const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const retiredRepositoryName = "rm-skill-claude";
 // Files that record the project's history and so must keep the old name.
-const historyFiles = ["docs/testing.md"];
+const historyFiles = [
+  "docs/testing.md",
+  "docs/requirements/revisao-fase-0.md",
+  "docs/requirements/revisao-fase-0-traceability.md",
+];
 
 function migrationSectionLines(markdown) {
   const lineNumbers = new Set();
