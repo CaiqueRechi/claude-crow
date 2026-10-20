@@ -129,6 +129,12 @@ Request the URL and look at the answer: the home or login page must respond
 (200 or a redirect to login), and the logs must be free of errors. Never say
 the environment is up without having seen this.
 
+Then measure it: five requests, and the median of their time. **Above 1 s the
+environment is slow** — diagnose it before handing it over, following
+[references/slowness.md](references/slowness.md), and apply each fix only
+after his yes to it. Before the report, stop every process you started in the
+background: measurement loops, log followers, watchers.
+
 ### 7. Commit the environment files
 
 The environment files belong to the project — whoever clones it can run it —
@@ -144,7 +150,10 @@ him whether the environment goes on that branch or waits for the merge.
 - the URL, and how to open it;
 - where the test accounts are;
 - what runs: each service, image and port;
-- the result of the URL check and of the test suite, as seen;
+- the result of the URL check and of the test suite, as seen, with the median
+  response time — and the diagnosis, when it was slow;
+- on Windows, where the project now lives in WSL and how to open it; after a
+  move, that the Windows folder is behind and must not be used any more;
 - the commands, one per line: start, stop, logs, run the tests, open a shell
   in the application container;
 - what was created and what already existed;
