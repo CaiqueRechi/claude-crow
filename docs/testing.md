@@ -300,7 +300,7 @@ instalação pelo GitHub com o nome novo só é possível depois do merge.**
 | Nome antigo fora das seções de migração | o teste novo passa; com um `crow@rm-skill-claude` posto de propósito no README, falhou apontando `README.md:264` |
 | Política idêntica na `develop` e na `build` | o teste novo passa; com uma frase alterada só na `build`, falhou apontando o arquivo |
 | Teste de referências | renomeado para "every external reference is present in the verified catalog", sem mudar o que confere |
-| `package-skill.sh` | passou em todas as validações; o ZIP não foi gerado nesta máquina, que não tem `zip` |
+| `package-skill.sh` | passou em todas as validações e inclui `.github/installation-policy.md`; o ZIP não foi gerado nesta máquina, que não tem `zip` |
 | Instalação limpa | com `CLAUDE_CONFIG_DIR` num diretório vazio: `claude plugin marketplace add <clone>` registrou o marketplace `claude-crow`; `claude plugin install crow@claude-crow` instalou a 1.2.0, habilitada, com as seis skills |
 | `claude plugin marketplace remove` | o comando existe no Claude Code 2.1.223 (`remove\|rm <name>`); a migração em si não foi executada |
 
