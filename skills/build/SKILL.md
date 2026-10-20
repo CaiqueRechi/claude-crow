@@ -180,5 +180,10 @@ first**, saying exactly what will be lost. Only after his yes:
 - `docker system prune`, `docker volume prune`, or any command without the
   project's compose scope;
 - delete volumes, containers or images without his confirmation;
-- touch containers of other projects;
-- change Docker Desktop settings.
+- touch containers of other projects — the one exception is a Docker Desktop
+  restart he approved after you listed the containers it would stop
+  ([references/docker-desktop.md](references/docker-desktop.md));
+- change Docker Desktop settings;
+- use *Clean / Purge data* or *Reset to factory defaults*, or uninstall Docker
+  Desktop — not even with his yes: all three delete the disk with every image
+  and volume on the machine.
