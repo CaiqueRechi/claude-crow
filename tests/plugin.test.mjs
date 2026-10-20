@@ -41,6 +41,22 @@ function trackedLinesMentioning(text, excludedFile) {
   }
 }
 
+// The skills that download or install, and so must carry the shared policy word for word.
+const skillsBoundByInstallationPolicy = ["develop", "build"];
+
+function readNormalized(relativePath) {
+  return readFileSync(join(repositoryRoot, relativePath), "utf8").replace(/\r\n/g, "\n");
+}
+
+test("develop and build carry the installation policy word for word", () => {
+  const policy = readNormalized(".github/installation-policy.md");
+
+  for (const skill of skillsBoundByInstallationPolicy) {
+    const skillText = readNormalized(`skills/${skill}/SKILL.md`);
+    assert.ok(skillText.includes(policy), `skills/${skill}/SKILL.md must contain .github/installation-policy.md verbatim`);
+  }
+});
+
 test("the retired rm-skill-claude name appears only where the move is explained", () => {
   const readmeMigrationLines = migrationSectionLines(readFileSync(join(repositoryRoot, "README.md"), "utf8"));
 
