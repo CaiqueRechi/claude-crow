@@ -97,6 +97,10 @@ modules out of his Windows folder.
 A queue worker reuses the application image with the worker command as
 `command:`; a scheduler, the same with the scheduler command.
 
+With Redis, give each instance its own key prefix (`REDIS_PREFIX=<compose
+project name>:` in Laravel), so two instances sharing nothing else still never
+read each other's cache, sessions or queues.
+
 ## Windows notes
 
 - Paths in `compose.yaml` use forward slashes.

@@ -106,6 +106,12 @@ Take stock first: `compose.yaml` (or `docker-compose.yml`), `docker/`,
   outside the project mounted.
 - **One compose project per project** (`name:` in `compose.yaml`), so
   commands never touch another project's containers or volumes.
+- **Two instances of the same system never collide.** A second checkout of
+  a project already running on the machine gets its own compose project
+  name, its own ports, its own cache prefix (`REDIS_PREFIX`) when it uses
+  Redis, and its own session cookie name (`SESSION_COOKIE` in Laravel).
+  Cookies belong to the host, not the port: two instances on `localhost`
+  with the same cookie name log each other out.
 - `APP_DEBUG` and similar development settings are fine here and stay in
   `.env`; nothing local is copied into a production configuration.
 
