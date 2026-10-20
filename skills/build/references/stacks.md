@@ -103,5 +103,6 @@ A queue worker reuses the application image with the worker command as
 - Shell scripts copied into images need LF line endings; the repository may
   check them out as CRLF. Prefer commands in `compose.yaml` or the
   `Dockerfile` over separate scripts.
-- Bind-mounted folders are slower on Windows; that is expected locally and not
-  a reason to change the layout.
+- The project runs from the WSL filesystem, never from a Windows folder: a
+  bind mount from NTFS makes every file access cross into the Docker VM. See
+  [wsl.md](wsl.md).

@@ -57,10 +57,29 @@ No application code yet? Then there is nothing to run: say so and suggest
 stack; [templates/php-laravel/](templates/php-laravel/) is the full set for
 PHP and Laravel.
 
-### 2. Check Docker
+### 2. Check Docker — on Windows, from inside WSL
 
 `docker info`. If the daemon is not running, ask him to open Docker Desktop and
 wait — do not start or reconfigure it yourself.
+
+**On Windows the environment always runs from the Ubuntu distribution of WSL**,
+in `~/projects/<folder name>`, never from a Windows folder: a project on NTFS
+read through a bind mount is slow enough to be unusable.
+[references/wsl.md](references/wsl.md) has every detail.
+
+1. **Ubuntu ready?** Check it as the reference says. Each missing step is shown
+   to him and run only after his yes to that step; creating the Linux user and
+   its password, `sudo`, and the WSL integration in Docker Desktop are his to
+   do, so give him the steps and wait. Carry on when `docker info` answers from
+   inside Ubuntu.
+2. **Project on NTFS?** Move it into `~/projects/<folder name>` now, before
+   anything else, following the reference. Uncommitted work stops the move:
+   list it and wait for him to commit or put it away. Keep the compose project
+   name so the volumes come along, and never delete the Windows folder.
+3. **From here on**, every command for the project runs inside Ubuntu
+   (`wsl.exe -d <distro> --cd ~/projects/<folder> -- …`). A command that must
+   run from the Windows process first drops the inherited variables that
+   collide with `.env` keys.
 
 ### 3. Create only what is missing
 
