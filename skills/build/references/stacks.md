@@ -24,8 +24,17 @@ Full set in [../templates/php-laravel/](../templates/php-laravel/):
   `bcmath`…) and Composer copied from `composer:2`.
 - Inside the container, `DB_HOST` is the service name (`db`), not `127.0.0.1`.
 - Prepare: `composer install`, `php artisan key:generate` when `APP_KEY` is
-  empty, `php artisan migrate --seed`.
-- Tests: `php artisan test`.
+  empty, `php artisan migrate --seed`, then
+  `chown -R www-data:www-data storage bootstrap/cache` — the bind-mounted files
+  belong to his Linux user, and Apache runs as `www-data`.
+- Tests: `php artisan test`, inside the container only.
+- Tests that execute JavaScript need Node in the application image. Only after
+  his yes, add it to `docker/app/Dockerfile` from the official image, in the
+  same version as the project's Node service:
+
+  ```dockerfile
+  COPY --from=node:22-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+  ```
 
 ## PostgreSQL instead of MySQL
 
@@ -97,11 +106,16 @@ modules out of his Windows folder.
 A queue worker reuses the application image with the worker command as
 `command:`; a scheduler, the same with the scheduler command.
 
+With Redis, give each instance its own key prefix (`REDIS_PREFIX=<compose
+project name>:` in Laravel), so two instances sharing nothing else still never
+read each other's cache, sessions or queues.
+
 ## Windows notes
 
 - Paths in `compose.yaml` use forward slashes.
 - Shell scripts copied into images need LF line endings; the repository may
   check them out as CRLF. Prefer commands in `compose.yaml` or the
   `Dockerfile` over separate scripts.
-- Bind-mounted folders are slower on Windows; that is expected locally and not
-  a reason to change the layout.
+- The project runs from the WSL filesystem, never from a Windows folder: a
+  bind mount from NTFS makes every file access cross into the Docker VM. See
+  [wsl.md](wsl.md).

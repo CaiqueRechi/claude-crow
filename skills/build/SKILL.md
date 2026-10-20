@@ -57,10 +57,29 @@ No application code yet? Then there is nothing to run: say so and suggest
 stack; [templates/php-laravel/](templates/php-laravel/) is the full set for
 PHP and Laravel.
 
-### 2. Check Docker
+### 2. Check Docker — on Windows, from inside WSL
 
 `docker info`. If the daemon is not running, ask him to open Docker Desktop and
 wait — do not start or reconfigure it yourself.
+
+**On Windows the environment always runs from the Ubuntu distribution of WSL**,
+in `~/projects/<folder name>`, never from a Windows folder: a project on NTFS
+read through a bind mount is slow enough to be unusable.
+[references/wsl.md](references/wsl.md) has every detail.
+
+1. **Ubuntu ready?** Check it as the reference says. Each missing step is shown
+   to him and run only after his yes to that step; creating the Linux user and
+   its password, `sudo`, and the WSL integration in Docker Desktop are his to
+   do, so give him the steps and wait. Carry on when `docker info` answers from
+   inside Ubuntu.
+2. **Project on NTFS?** Move it into `~/projects/<folder name>` now, before
+   anything else, following the reference. Uncommitted work stops the move:
+   list it and wait for him to commit or put it away. Keep the compose project
+   name so the volumes come along, and never delete the Windows folder.
+3. **From here on**, every command for the project runs inside Ubuntu
+   (`wsl.exe -d <distro> --cd ~/projects/<folder> -- …`). A command that must
+   run from the Windows process first drops the inherited variables that
+   collide with `.env` keys.
 
 ### 3. Create only what is missing
 
@@ -87,6 +106,12 @@ Take stock first: `compose.yaml` (or `docker-compose.yml`), `docker/`,
   outside the project mounted.
 - **One compose project per project** (`name:` in `compose.yaml`), so
   commands never touch another project's containers or volumes.
+- **Two instances of the same system never collide.** A second checkout of
+  a project already running on the machine gets its own compose project
+  name, its own ports, its own cache prefix (`REDIS_PREFIX`) when it uses
+  Redis, and its own session cookie name (`SESSION_COOKIE` in Laravel).
+  Cookies belong to the host, not the port: two instances on `localhost`
+  with the same cookie name log each other out.
 - `APP_DEBUG` and similar development settings are fine here and stay in
   `.env`; nothing local is copied into a production configuration.
 
@@ -102,13 +127,31 @@ Take stock first: `compose.yaml` (or `docker-compose.yml`), `docker/`,
    with one account per role in the requirements document and fictitious
    data. Their credentials are local test values: keep them in the seeder or
    `.env.example`, point him there, and do not repeat them in the chat.
-4. Run the test suite once inside the container, if there is one.
+4. **Files the web server writes** belong to its user inside the container —
+   for Laravel, `chown -R www-data:www-data storage bootstrap/cache`. Without
+   it the server cannot write logs or compiled views and pages answer 500.
+5. Run the test suite once inside the container, if there is one — **only
+   there**, never with the host's runtime against the same folder: a host PHP
+   compiling views into `storage/` leaves files the container cannot touch.
+   If that already happened, clear them inside the container
+   (`php artisan view:clear`).
+6. **Tests that run Node** need Node in the application image. If it is
+   missing, propose adding it — copied from the official image, in the same
+   version as the project's Node service — and add it only after his yes; in a
+   project with its own Dockerfile, ask before touching it. Without his yes,
+   report which tests could not run and why.
 
 ### 6. Check before handing it over
 
 Request the URL and look at the answer: the home or login page must respond
 (200 or a redirect to login), and the logs must be free of errors. Never say
 the environment is up without having seen this.
+
+Then measure it: five requests, and the median of their time. **Above 1 s the
+environment is slow** — diagnose it before handing it over, following
+[references/slowness.md](references/slowness.md), and apply each fix only
+after his yes to it. Before the report, stop every process you started in the
+background: measurement loops, log followers, watchers.
 
 ### 7. Commit the environment files
 
@@ -125,7 +168,10 @@ him whether the environment goes on that branch or waits for the merge.
 - the URL, and how to open it;
 - where the test accounts are;
 - what runs: each service, image and port;
-- the result of the URL check and of the test suite, as seen;
+- the result of the URL check and of the test suite, as seen, with the median
+  response time — and the diagnosis, when it was slow;
+- on Windows, where the project now lives in WSL and how to open it; after a
+  move, that the Windows folder is behind and must not be used any more;
 - the commands, one per line: start, stop, logs, run the tests, open a shell
   in the application container;
 - what was created and what already existed;
@@ -152,5 +198,10 @@ first**, saying exactly what will be lost. Only after his yes:
 - `docker system prune`, `docker volume prune`, or any command without the
   project's compose scope;
 - delete volumes, containers or images without his confirmation;
-- touch containers of other projects;
-- change Docker Desktop settings.
+- touch containers of other projects — the one exception is a Docker Desktop
+  restart he approved after you listed the containers it would stop
+  ([references/docker-desktop.md](references/docker-desktop.md));
+- change Docker Desktop settings;
+- use *Clean / Purge data* or *Reset to factory defaults*, or uninstall Docker
+  Desktop — not even with his yes: all three delete the disk with every image
+  and volume on the machine.

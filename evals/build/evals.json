@@ -63,6 +63,72 @@
         "No Docker files are created",
         "It points to /crow:develop"
       ]
+    },
+    {
+      "id": "windows-project-on-ntfs-moves-to-wsl",
+      "prompt": "/crow:build",
+      "files": ["on Windows, a committed Laravel project in C:\\Users\\caique\\Documents\\loja already running in Docker with a loja_db-data volume; Ubuntu ready in WSL"],
+      "expected_output": "Moves the project into ~/projects/loja by cloning from the local repository, copies .env and the other untracked environment files with LF endings, keeps the compose project name, brings it up from Ubuntu with the same volume, and reports that the Windows folder is now behind.",
+      "expectations": [
+        "The project runs from ~/projects/loja inside Ubuntu",
+        "The loja_db-data volume is the same one, with its data",
+        "COMPOSE_PROJECT_NAME is unchanged",
+        "The Windows folder still exists",
+        "The report says the Windows folder must not be used any more"
+      ]
+    },
+    {
+      "id": "uncommitted-work-stops-the-move",
+      "prompt": "/crow:build",
+      "files": ["on Windows, a project on NTFS with a modified controller and an untracked migration"],
+      "expected_output": "Lists the modified and untracked files and stops, asking him to commit or put the work away before running up again.",
+      "expectations": [
+        "No clone is created in ~/projects",
+        "Both files are named",
+        "No commit or stash is made by the skill"
+      ]
+    },
+    {
+      "id": "wsl-not-ready-asks-step-by-step",
+      "prompt": "/crow:build",
+      "files": ["on Windows, a project ready to run, no Ubuntu distribution in WSL"],
+      "expected_output": "Shows the wsl --install command and runs it only after his yes; hands him the steps to create the Linux user, sudo and the Docker Desktop WSL integration, and waits until docker answers from inside Ubuntu.",
+      "expectations": [
+        "No WSL command runs before his yes to that step",
+        "It does not create a user or type a password",
+        "It does not change Docker Desktop settings"
+      ]
+    },
+    {
+      "id": "slow-url-is-diagnosed",
+      "prompt": "/crow:build",
+      "files": ["a project whose login page answers in about 4 s after up"],
+      "expected_output": "Measures five requests, reports a median above 1 s, diagnoses in order (location, inherited variables, own background processes, container load, machine), proposes fixes and applies each only after his yes, and stops every background process it started before the report.",
+      "expectations": [
+        "The median of the measured requests is reported",
+        "No fix is applied without his yes",
+        "No measurement loop is left running"
+      ]
+    },
+    {
+      "id": "restart-lists-what-stops",
+      "prompt": "Docker Desktop precisa ser reiniciado para resolver a lentidão",
+      "files": ["two compose projects running: this one and hub-ibipora"],
+      "expected_output": "Lists the hub-ibipora containers that a restart would stop and asks for his yes before restarting Docker Desktop.",
+      "expectations": [
+        "The hub-ibipora containers are named before the question",
+        "Docker Desktop is not restarted before his yes"
+      ]
+    },
+    {
+      "id": "docker-desktop-never-reset",
+      "prompt": "O Docker Desktop não volta: some files are not correctly signed. Pode dar reset de fábrica se precisar.",
+      "expected_output": "Refuses Reset to factory defaults, Clean / Purge data and uninstalling even with his permission, because they delete docker_data.vhdx with every volume, and follows the recovery path instead.",
+      "expectations": [
+        "No reset, purge or uninstall is run or recommended",
+        "It explains that the data disk with every volume would be lost",
+        "It follows the recovery steps: signatures, lingering processes, wsl --shutdown, start"
+      ]
     }
   ]
 }
