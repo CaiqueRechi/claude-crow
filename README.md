@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Claude Crow" width="480">
+  <img src="assets/Claude_Crow_transparente_1024.png" alt="Claude Crow" width="480">
 </p>
 
 # claude-crow
