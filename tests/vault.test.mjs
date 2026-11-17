@@ -82,3 +82,11 @@ test("RF-07 encrypts a whole plaintext folder into .enc files, skipping .git", (
     assert.equal(vault.readEncrypted(join(home, "private", "hub", "acessos.json.enc")), '{"modules":{}}');
   });
 });
+
+test("the CLI paths stay inside the crow folder", () => {
+  withCrowHome((home) => {
+    assert.equal(vault.crowPath("receitas/hub.json.enc"), join(home, "receitas", "hub.json.enc"));
+    assert.throws(() => vault.crowPath("../fora.json"), /must stay inside/);
+    assert.throws(() => vault.crowPath(join(home, "..", "fora.json")), /must stay inside/);
+  });
+});
