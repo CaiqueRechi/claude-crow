@@ -308,3 +308,23 @@ O que falta: `claude plugin marketplace add CaiqueRechi/claude-crow` direto do
 GitHub, que só reflete o nome novo depois do merge, e a migração de uma
 instalação existente pelos três comandos do README. A política de instalação
 é texto de skill: nenhum agente rodou um `up` com ela ainda.
+
+## setup e preferências (1.3.0)
+
+**Verificado por teste e por execução do hook numa cópia do plugin; a
+entrevista da `setup` dentro de uma sessão real ainda não rodou.**
+
+| Verificação | Resultado |
+| --- | --- |
+| `npm test` | 17 de 17 passando |
+| Tabela da `conventions` igual ao catálogo da `setup` | passa; com um padrão alterado só na `conventions`, falhou |
+| Hook sem respostas | devolve JSON de `SessionStart` pedindo `crow:setup` (primeira vez) |
+| Hook com respostas de outra versão | pede `crow:setup` em modo de atualização, citando a versão antiga |
+| Hook com respostas em dia | reescreve só o bloco entre os marcadores, sem saída |
+| Hook rodado de novo | não reescreve o arquivo |
+| `package-skill.sh` | passou nas validações e copiou `hooks/`; o ZIP não foi gerado nesta máquina, que não tem `zip` |
+
+O que falta: abrir uma sessão real com o plugin instalado e ver o Claude
+chamar a `setup` antes do primeiro pedido, a entrevista até o fim e o arquivo
+`~/.claude/crow/preferences.md` gravado; e uma sessão depois de atualizar. Não
+deu para rodar o Claude Code numa configuração isolada sem login.

@@ -17,9 +17,28 @@ comando com o prefixo do plugin.
 | `/crow:develop` | codifica o que o analyst documentou, fase por fase | só quando eu chamo |
 | `/crow:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
 | `/crow:security-validation` | analista de segurança defensiva | só quando eu chamo |
+| `/crow:setup` | as preferências pessoais de quem usa o crow | sozinha na primeira sessão e depois de cada atualização; ou quando eu chamo |
 
 A ordem num projeto novo: `context` → `analyst` → `develop` → `build` →
 `security-validation`. A `conventions` vale o tempo todo.
+
+## setup
+
+O crow traz as minhas preferências como padrão, mas quem instala escolhe as
+suas: nome, idiomas, padrão de branch, push, como os commits se dividem,
+prefixos, nomes no código e no banco, a pasta e a distribuição do WSL, o limite
+de lentidão da `build` e o ritmo da `analyst`. Na primeira sessão depois de
+instalar — e depois de cada atualização — o crow pergunta antes de qualquer
+outra coisa: mostra a tabela, você mantém ou ajusta só o que quiser, e as
+respostas ficam em `~/.claude/crow/preferences.md`, fora do plugin.
+
+```
+/crow:setup
+/crow:setup show
+```
+
+O que é preferência e o que é boa prática fixa:
+[docs/setup.md](docs/setup.md).
 
 Skill nova entra em `skills/<nome>/SKILL.md` e vira `/crow:<nome>`. O nome da
 pasta tem de bater com o `name:` do frontmatter: quando divergem, a skill
@@ -51,7 +70,10 @@ Como funciona: [docs/context.md](docs/context.md).
 ## conventions
 
 As decisões que eu já tomei e não quero repetir a cada sessão. Valem para
-qualquer projeto meu, e não descrevem sistema nenhum em específico.
+qualquer projeto meu, e não descrevem sistema nenhum em específico. Para quem
+instala o crow, as que são gosto pessoal (branch, idiomas, push, divisão dos
+commits, nomes) viram as preferências do `/crow:setup`; as que são boa prática
+valem para todos.
 
 | Assunto | Regra |
 | --- | --- |
