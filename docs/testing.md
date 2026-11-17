@@ -353,7 +353,7 @@ com a receita de usuários aprovada, um fluxo mapeado e um catálogo gerado; e
 medir os tokens desse primeiro uso. Os testes do navegador são pulados numa
 máquina sem Chrome nem Edge.
 
-## Registro de uso (1.4.0)
+## Registro de uso (1.4.1)
 
 **O script foi exercido com um registro de sessão de exemplo e com o registro
 real desta sessão; o ciclo completo pelos hooks, numa sessão nova, não.**
