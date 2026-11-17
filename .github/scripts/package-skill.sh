@@ -68,7 +68,7 @@ rm -rf -- "$outputDirectory"
 mkdir -p "$packageDirectory/docs" "$packageDirectory/.github"
 
 cp README.md VERSION "$packageDirectory/"
-cp -R .claude-plugin skills locked-skills assets hooks "$packageDirectory/"
+cp -R .claude-plugin skills locked-skills assets hooks lib "$packageDirectory/"
 cp .github/installation-policy.md "$packageDirectory/.github/"
 cp "${documentationFiles[@]}" "$packageDirectory/docs/"
 
