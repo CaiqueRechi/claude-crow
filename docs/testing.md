@@ -352,3 +352,22 @@ O que falta: rodar as três skills num projeto real (o Hub no ambiente local),
 com a receita de usuários aprovada, um fluxo mapeado e um catálogo gerado; e
 medir os tokens desse primeiro uso. Os testes do navegador são pulados numa
 máquina sem Chrome nem Edge.
+
+## Registro de uso (1.4.1)
+
+**O script foi exercido com um registro de sessão de exemplo e com o registro
+real desta sessão; o ciclo completo pelos hooks, numa sessão nova, não.**
+
+| Verificação | Resultado |
+| --- | --- |
+| `npm test` | 52 de 52 passando (11 do registro de uso) |
+| Tokens | a mesma resposta em várias linhas conta uma vez só; o que veio antes do comando não entra; modelo `<synthetic>` fica de fora |
+| Tempo ativo | a espera pela resposta a uma pergunta da skill não conta |
+| Início e fim | `/crow:<skill>` abre; o último passo fecha com a nota; um comando novo ou o fim da sessão grava `interrompida`; `/crow:conventions` e prompts comuns não abrem nada |
+| Privacidade | a linha não tem o pedido, o caminho nem o id da sessão; comentário só com nota 1 ou 2 |
+| Desligado | com "Registro de uso: não", nada é gravado, nem a pasta é criada |
+| Robustez | entrada inválida no hook e linha quebrada no registro não derrubam nada |
+| Registro real | as últimas 300 linhas desta sessão somaram 34 ferramentas e ~19 milhões de tokens de cache lidos, coerente com o uso visto |
+
+O que falta: uma execução real de ponta a ponta, numa sessão nova com o plugin
+atualizado — o hook abrindo, a skill perguntando a nota e a linha gravada.

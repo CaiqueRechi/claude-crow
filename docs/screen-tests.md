@@ -101,7 +101,7 @@ repositório no GitHub.
 ## Limitações
 
 - Só aplicações web. Aplicativo desktop fica para depois.
-- O consumo de tokens ainda não foi medido. No primeiro uso real, anote o uso
-  da sessão.
+- O consumo de tokens ainda não foi medido. O [registro de uso](usage-log.md)
+  grava os tokens de cada execução a partir do primeiro uso real.
 - A receita de usuários e os fluxos dependem de você aprovar. Nada disso é
   gravado sem o seu ok.

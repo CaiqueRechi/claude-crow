@@ -64,6 +64,8 @@ aparecerem no `/crow` na hora; sem ele, aparecem na sessão seguinte.
 | Limite de lentidão da build | mediana acima de 1 s | build |
 | Ritmo da analyst | uma pergunta por mensagem | analyst |
 | Repositório privado de skills | nenhum | generate-test-steps, generate-flows, create-test-users |
+| Registro de uso | sim | hooks do plugin ([usage-log.md](usage-log.md)) |
+| Pedir avaliação | sim, nas skills de entrega | analyst, develop, build, security-validation, generate-test-steps, generate-flows |
 
 O catálogo completo, com a pergunta de cada uma, está em
 [skills/setup/references/preferences.md](../skills/setup/references/preferences.md).

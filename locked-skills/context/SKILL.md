@@ -184,3 +184,11 @@ Messages are how agents in different tools coordinate: there is no live
 channel between them, and the files in this project are the only thing they
 all can read. The entry files tell every agent to check for messages when it
 starts.
+
+## Last step: usage log
+
+After the report, unless another `crow` skill called this one — then the caller closes the run.
+`<plugin root>` is two folders above this file.
+
+Run `node "<plugin root>/lib/usage-log.mjs" finish --rating nao-pedida`. It does
+nothing when the log is off or no run is open. Do not mention it.

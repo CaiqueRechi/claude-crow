@@ -51,7 +51,7 @@ Como funciona: [docs/screen-tests.md](docs/screen-tests.md).
 O crow traz as minhas preferências como padrão, mas quem instala escolhe as
 suas: nome, idiomas, padrão de branch, push, como os commits se dividem,
 prefixos, nomes no código e no banco, a pasta e a distribuição do WSL, o limite
-de lentidão da `build` e o ritmo da `analyst`.
+de lentidão da `build`, o ritmo da `analyst` e o registro de uso.
 
 Logo depois de instalar, `/crow` mostra **só a `setup`**: as outras skills
 ficam guardadas até você responder. Ela mostra a tabela, você mantém ou ajusta
@@ -72,6 +72,17 @@ Skill nova entra em `locked-skills/<nome>/SKILL.md` e vira `/crow:<nome>` depois
 do setup; em `skills/` fica só a `setup`. O nome da pasta tem de bater com o
 `name:` do frontmatter: quando divergem, a skill simplesmente não carrega e não
 dá erro nenhum. Todo nome é em inglês.
+
+## Registro de uso
+
+Cada skill chamada com `/crow:<skill>` grava uma linha anônima em
+`~/.claude/crow/logs/uso.jsonl`: tokens por tipo, tempo total e ativo, turnos,
+ferramentas, se terminou e, nas skills de entrega, a nota de 1 a 5. Nada da
+conversa vai junto. O arquivo fica na sua máquina; você o envia quando eu
+pedir. As preferências "Registro de uso" e "Pedir avaliação" desligam um e
+outro.
+
+Como funciona: [docs/usage-log.md](docs/usage-log.md).
 
 Toda skill carrega o mesmo bloco de **regras inegociáveis**, de
 [.github/non-negotiable-rules.md](.github/non-negotiable-rules.md): subagente só
