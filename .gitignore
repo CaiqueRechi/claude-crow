@@ -8,3 +8,7 @@ rm-skill-workspace/
 
 # Dependencias de desenvolvimento dos testes
 node_modules/
+
+# Skills the setup releases into skills/ when run from a clone
+/skills/*
+!/skills/setup/

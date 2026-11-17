@@ -14,14 +14,19 @@ guidelines contradict them, ask instead of picking silently.
 
 The values below are the personal choices of whoever uses this plugin. "He"
 and "his", here and in every `crow` skill, mean the user named in this table.
-`/crow:setup` asks for them on first use and after every update, keeps the
-answers in `~/.claude/crow/preferences.md`, and rewrites this block at the
-start of each session. Until then, it shows the defaults.
+`/crow:setup` asks for them on first use and whenever an update adds a new
+preference, keeps the answers in `~/.claude/crow/preferences.md`, and the
+session-start hook rewrites this block from them. Until then, it shows the
+defaults.
 
 Where a section below states one of these values, **the table wins**: the
 sections explain the default and why it exists; the table is his choice. The
 rest of this skill — design, security, testing, one commit per change,
 history, hooks — is good practice and holds for everyone.
+
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
 
 <!-- crow:preferences:start -->
 | Preferência | Valor |

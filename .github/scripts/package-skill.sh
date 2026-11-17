@@ -28,7 +28,8 @@ if [[ "$(manifestField version)" != "$version" ]]; then
 fi
 
 shopt -s nullglob
-skillFiles=(skills/*/SKILL.md)
+# skills/ holds what is visible on install (setup); locked-skills/ holds what setup releases.
+skillFiles=(skills/*/SKILL.md locked-skills/*/SKILL.md)
 if (( ${#skillFiles[@]} == 0 )); then
     echo "At least one skill is required in skills/<name>/SKILL.md." >&2
     exit 1
@@ -67,7 +68,7 @@ rm -rf -- "$outputDirectory"
 mkdir -p "$packageDirectory/docs" "$packageDirectory/.github"
 
 cp README.md VERSION "$packageDirectory/"
-cp -R .claude-plugin skills assets hooks "$packageDirectory/"
+cp -R .claude-plugin skills locked-skills assets hooks "$packageDirectory/"
 cp .github/installation-policy.md "$packageDirectory/.github/"
 cp "${documentationFiles[@]}" "$packageDirectory/docs/"
 

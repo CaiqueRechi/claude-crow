@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Sets the user's personal preferences for the crow plugin — name, languages, branch pattern, push, commit granularity and prefixes, code and database naming, the Windows/WSL environment, the build's slowness threshold and the analyst's pace — and writes them into the preferences table of the conventions skill. Runs on the first session after crow is installed and after every update, when the session-start hook asks for it, and whenever he calls /crow:setup to change something.
+description: Sets the user's personal preferences for the crow plugin — name, languages, branch pattern, push, commit granularity and prefixes, code and database naming, the Windows/WSL environment, the build's slowness threshold and the analyst's pace — and writes them into the preferences table of the conventions skill. It is the only crow skill available until it is done: the others are released when every preference has an answer. Runs on the first session after crow is installed, after an update that adds new preferences, when the session-start hook asks for it, and whenever he calls /crow:setup to change something.
 argument-hint: "[show]"
 ---
 
@@ -36,9 +36,12 @@ default or skill text.
 - **His answers**: `~/.claude/crow/preferences.md`. It lives outside the plugin
   so updates never erase it. Nothing else in the plugin writes to it.
 - **The table in the conventions**: the block between
-  `<!-- crow:preferences:start -->` and `<!-- crow:preferences:end -->` in
-  [../conventions/SKILL.md](../conventions/SKILL.md), which the session-start
-  hook rewrites from his answers.
+  `<!-- crow:preferences:start -->` and `<!-- crow:preferences:end -->` in the
+  conventions skill, which the session-start hook rewrites from his answers.
+- **The lock**: on install only this skill sits in the plugin's `skills/`; the
+  other `crow` skills wait in `locked-skills/` and the session-start hook copies
+  them into `skills/` once every catalog preference has an answer. Until then
+  nothing else in `crow` can run, whoever calls it.
 
 Only what the catalog lists is asked. Everything under "Not preferences" in the
 catalog stays as it is, whatever he answers — if he asks to change one of
@@ -52,29 +55,32 @@ Read the catalog, his answers file if it exists, and the plugin version in
 | Situation | Mode |
 | --- | --- |
 | no answers file | **first run** — start from the defaults |
-| answers saved under another `crow_version` | **update** — start from his saved values |
-| answers saved under this version | **on demand** — start from his saved values |
+| a catalog preference missing from his file | **new preferences** — ask only those |
+| every catalog preference answered | **on demand** — he called it to change something |
 
-In update mode, a preference in the catalog that is missing from his file is
-**new in this version**: it is always asked on its own, even if he keeps the
-rest.
+An update alone is not a reason to ask again: only preferences the catalog
+gained since his answers are. When they were all answered before, there is
+nothing to ask — go straight to *Apply now*.
 
 ## 2. Ask — simple first, detail only where he wants it
 
 One question per message. When the answer space can be enumerated, use
 AskUserQuestion; otherwise ask in plain text.
 
-1. **Keep or adjust.** Show the full table with the starting values (defaults
-   on a first run, his values otherwise) and ask whether to keep it as it is or
-   adjust some. On a first run, say in one line why: these are the personal
-   choices the other `crow` skills will follow.
+1. **Keep or adjust** — first run and on demand. Show the full table with the
+   starting values (defaults on a first run, his values otherwise) and ask
+   whether to keep it as it is or adjust some. On a first run, say in one line
+   why: these are the personal choices the other `crow` skills will follow, and
+   they become available once this is done.
 2. **Which groups.** If he adjusts, ask which groups — the catalog's four
    groups, several allowed.
 3. **Each preference** of the chosen groups, one at a time, using the
    catalog's question. Offer the current value first, marked as current, and
    one or two common alternatives when there are obvious ones; the free answer
    is always there.
-4. **New preferences**, in update mode, one at a time the same way.
+4. **New preferences** — in that mode, only the missing ones, one at a time
+   the same way, offering the catalog default first. His other answers are
+   kept untouched.
 
 A vague answer gets a follow-up until it can be applied: "branch curta" → which
 prefix, from which base branch.
@@ -101,16 +107,22 @@ in the catalog.
 
 ## 4. Apply now
 
-Run the session-start hook once, so the conventions table shows his answers in
-this session instead of the next one:
+Run the session-start hook once: with every preference answered it releases
+the other skills into `skills/` and writes his answers into the conventions
+table, in this session instead of the next one:
 
 ```bash
 bash "<plugin root>/hooks/session-start.sh"
 ```
 
-`<plugin root>` is two folders above this skill's directory. Then read the
-block in the conventions back and check it matches the file. If the hook could
-not write it, say so: the answers are saved and the next session applies them.
+`<plugin root>` is two folders above this skill's directory. Then check that
+`skills/` now holds every folder of `locked-skills/` and that the conventions
+block matches his file. If the hook could not do it, say so: the answers are
+saved and the next session applies them.
+
+Claude Code reads the plugin's skills when the session starts, so ask him to
+run `/reload-plugins` — that makes the released skills appear in `/crow` now;
+otherwise they appear in the next session.
 
 ## 5. Report
 

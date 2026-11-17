@@ -1,50 +1,63 @@
 #!/usr/bin/env bash
-# Rewrites the preferences table in the conventions skill from the user's saved
-# answers, or asks Claude to run /crow:setup when there are none or the plugin
-# was updated since they were given. Never fails the session: exits 0 always.
+# Keeps crow locked behind /crow:setup: only setup ships in skills/, the other
+# skills wait in locked-skills/ until every preference in setup's catalog has an
+# answer. Then they are copied into skills/ and the conventions table is
+# rewritten from the answers. Never fails the session: exits 0 always.
 
 pluginRoot="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 preferencesFile="${CROW_PREFERENCES_FILE:-$HOME/.claude/crow/preferences.md}"
+catalogFile="$pluginRoot/skills/setup/references/preferences.md"
 conventionsFile="$pluginRoot/skills/conventions/SKILL.md"
 startMarker="<!-- crow:preferences:start -->"
 endMarker="<!-- crow:preferences:end -->"
 
-pluginVersion="$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$pluginRoot/.claude-plugin/plugin.json" 2>/dev/null | head -n 1)"
-
-askForSetup() {
-    local situation="$1"
-    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"crow plugin: %s Before acting on the user'"'"'s first request, invoke the crow:setup skill and run it to the end, then carry on with what they asked."}}\n' "$situation"
+tellClaude() {
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"crow plugin: %s"}}\n' "$1"
     exit 0
 }
 
+askForSetup() {
+    tellClaude "$1 Only /crow:setup is available until it is done. Before acting on the user's first request, invoke the crow:setup skill and run it to the end, then carry on with what they asked."
+}
+
+# First column of every table row except the header and the separator.
+preferenceNames() {
+    tr -d '\r' < "$1" | awk -F'|' '/^\|/ && $2 !~ /^ *(Preferência|-+) *$/ { gsub(/^ +| +$/, "", $2); print $2 }'
+}
+
 if [[ ! -f "$preferencesFile" ]]; then
-    askForSetup "this user has not set their preferences yet (first run of crow ${pluginVersion})."
+    askForSetup "this user has not set their preferences yet."
 fi
 
-savedVersion="$(sed -n 's/^crow_version:[[:space:]]*//p' "$preferencesFile" | head -n 1 | tr -d '\r[:space:]')"
-if [[ "$savedVersion" != "$pluginVersion" ]]; then
-    askForSetup "crow was updated to ${pluginVersion}; the preferences were set under ${savedVersion:-an unknown version} and must be confirmed (update mode)."
+missingPreferences="$(comm -23 <(preferenceNames "$catalogFile" | sort) <(preferenceNames "$preferencesFile" | sort) | paste -sd ',' - | sed 's/,/, /g')"
+if [[ -n "$missingPreferences" ]]; then
+    askForSetup "this version of crow has preferences the user has not answered yet (${missingPreferences})."
 fi
 
-preferencesTable="$(grep '^|' "$preferencesFile" | tr -d '\r')"
-if [[ -z "$preferencesTable" ]]; then
-    askForSetup "the saved preferences file has no table and must be filled in again."
+releasedSkills=()
+for lockedSkill in "$pluginRoot"/locked-skills/*/; do
+    skillName="$(basename "$lockedSkill")"
+    if [[ ! -d "$pluginRoot/skills/$skillName" ]]; then
+        cp -R "$lockedSkill" "$pluginRoot/skills/$skillName" && releasedSkills+=("$skillName")
+    fi
+done
+
+if [[ -w "$conventionsFile" ]] && grep -qF "$startMarker" "$conventionsFile" && grep -qF "$endMarker" "$conventionsFile"; then
+    preferencesTable="$(grep '^|' "$preferencesFile" | tr -d '\r')"
+    renderedFile="$(mktemp)"
+    # The table goes through the environment: a multi-line awk -v value is not portable.
+    tr -d '\r' < "$conventionsFile" | PREFERENCES_TABLE="$preferencesTable" awk -v start="$startMarker" -v end="$endMarker" '
+        $0 == start { print; print ENVIRON["PREFERENCES_TABLE"]; skipping = 1; next }
+        $0 == end { skipping = 0 }
+        !skipping { print }
+    ' > "$renderedFile"
+    if ! cmp -s <(tr -d '\r' < "$conventionsFile") "$renderedFile"; then
+        cat "$renderedFile" > "$conventionsFile"
+    fi
+    rm -f "$renderedFile"
 fi
 
-if [[ ! -w "$conventionsFile" ]] || ! grep -qF "$startMarker" "$conventionsFile" || ! grep -qF "$endMarker" "$conventionsFile"; then
-    exit 0
+if (( ${#releasedSkills[@]} > 0 )); then
+    tellClaude "the preferences are complete, so these skills were released: ${releasedSkills[*]}. If /crow does not list them yet, ask the user to run /reload-plugins."
 fi
-
-renderedFile="$(mktemp)"
-# The table goes through the environment: a multi-line awk -v value is not portable.
-tr -d '\r' < "$conventionsFile" | PREFERENCES_TABLE="$preferencesTable" awk -v start="$startMarker" -v end="$endMarker" '
-    $0 == start { print; print ENVIRON["PREFERENCES_TABLE"]; skipping = 1; next }
-    $0 == end { skipping = 0 }
-    !skipping { print }
-' > "$renderedFile"
-
-if ! cmp -s <(tr -d '\r' < "$conventionsFile") "$renderedFile"; then
-    cat "$renderedFile" > "$conventionsFile"
-fi
-rm -f "$renderedFile"
 exit 0

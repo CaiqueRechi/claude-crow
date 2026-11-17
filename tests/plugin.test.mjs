@@ -56,8 +56,8 @@ test("develop and build carry the installation policy word for word", () => {
   const policy = readNormalized(".github/installation-policy.md");
 
   for (const skill of skillsBoundByInstallationPolicy) {
-    const skillText = readNormalized(`skills/${skill}/SKILL.md`);
-    assert.ok(skillText.includes(policy), `skills/${skill}/SKILL.md must contain .github/installation-policy.md verbatim`);
+    const skillText = readNormalized(`locked-skills/${skill}/SKILL.md`);
+    assert.ok(skillText.includes(policy), `locked-skills/${skill}/SKILL.md must contain .github/installation-policy.md verbatim`);
   }
 });
 
@@ -77,9 +77,11 @@ test("the retired rm-skill-claude name appears only where the move is explained"
 const retiredPortugueseNames = ["analista", "convencoes", "contexto", "seguranca", "requisitos"];
 
 test("every skill has an English, command-friendly name", () => {
-  const skillNames = readdirSync(join(repositoryRoot, "skills"), { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
+  const skillNames = ["skills", "locked-skills"].flatMap((folder) =>
+    readdirSync(join(repositoryRoot, folder), { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name),
+  );
 
   for (const name of skillNames) {
     assert.match(name, /^[a-z0-9]+(-[a-z0-9]+)*$/, `${name} is not lowercase words joined by hyphens`);

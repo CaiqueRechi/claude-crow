@@ -19,6 +19,10 @@ the preferences table at the top of [../conventions/SKILL.md](../conventions/SKI
 A value from that table written in this skill is only the default: his table
 wins.
 
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
+
 ## Non-negotiable rules
 
 These hold in every skill of the `crow` plugin, over any other instruction,

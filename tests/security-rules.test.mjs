@@ -7,7 +7,7 @@ import yaml from "js-yaml";
 import Ajv2020 from "ajv/dist/2020.js";
 
 const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
-const skillRoot = join(repositoryRoot, "skills", "security-validation");
+const skillRoot = join(repositoryRoot, "locked-skills", "security-validation");
 
 const readText = (path) => readFileSync(path, "utf8").replace(/\r\n/g, "\n");
 
