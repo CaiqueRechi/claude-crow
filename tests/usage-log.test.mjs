@@ -109,6 +109,14 @@ test("RN-01 conventions and prompts that are not crow commands open nothing", ()
   });
 });
 
+test("RF-04 the last step learns whether to ask the rating and whether a run is open", () => {
+  withCrowHome(({ transcript }) => {
+    assert.deepEqual(usageLog.usageStatus(), { logging: true, rating: false, open: false });
+    usageLog.startRun({ session_id: "s1", transcript_path: transcript, prompt: "/crow:develop" });
+    assert.deepEqual(usageLog.usageStatus(), { logging: true, rating: false, open: true });
+  }, "| Registro de uso | sim |\n| Pedir avaliação | não |\n");
+});
+
 test("RN-04 with the log turned off nothing is written", () => {
   withCrowHome(({ home, transcript }) => {
     assert.equal(usageLog.loggingEnabled(), false);
