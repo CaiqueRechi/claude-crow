@@ -49,6 +49,8 @@ end, then come back to this request. Nothing in `crow` runs before it.
 | Limite de lentidão da build | mediana acima de 1 s |
 | Ritmo da analyst | uma pergunta por mensagem |
 | Repositório privado de skills | nenhum |
+| Registro de uso | sim |
+| Pedir avaliação | sim, nas skills de entrega |
 <!-- crow:preferences:end -->
 
 Only what he has actually stated belongs in this skill. If you find yourself

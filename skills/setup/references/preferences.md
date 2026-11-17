@@ -24,6 +24,8 @@ answers are asked together when he chooses to adjust.
 | Limite de lentidão da build | Ambiente e ritmo | A partir de quanto tempo de resposta o ambiente é lento? | mediana acima de 1 s | build |
 | Ritmo da analyst | Ambiente e ritmo | Como a analyst pergunta? | uma pergunta por mensagem | analyst |
 | Repositório privado de skills | Ambiente e ritmo | Você tem acesso a um repositório privado de skills, fluxos e mapas de acesso? Qual a URL? | nenhum | generate-test-steps, generate-flows, create-test-users |
+| Registro de uso | Ambiente e ritmo | Grava um registro anônimo de cada skill que você chama (tokens, tempo, nota) em `~/.claude/crow/logs/uso.jsonl`, para enviar ao autor do crow quando ele pedir? | sim | every skill (hooks) |
+| Pedir avaliação | Ambiente e ritmo | No fim das skills de entrega, pergunta uma nota de 1 a 5 para o resultado? | sim, nas skills de entrega | analyst, develop, build, security-validation, generate-test-steps, generate-flows |
 
 ## Not preferences
 
