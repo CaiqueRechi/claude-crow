@@ -316,15 +316,18 @@ entrevista da `setup` dentro de uma sessão real ainda não rodou.**
 
 | Verificação | Resultado |
 | --- | --- |
-| `npm test` | 17 de 17 passando |
+| `npm test` | 20 de 20 passando |
+| Só a `setup` em `skills/` | passa; as outras seis estão em `locked-skills/`, cada uma com a trava "Setup first" |
 | Tabela da `conventions` igual ao catálogo da `setup` | passa; com um padrão alterado só na `conventions`, falhou |
-| Hook sem respostas | devolve JSON de `SessionStart` pedindo `crow:setup` (primeira vez) |
-| Hook com respostas de outra versão | pede `crow:setup` em modo de atualização, citando a versão antiga |
-| Hook com respostas em dia | reescreve só o bloco entre os marcadores, sem saída |
-| Hook rodado de novo | não reescreve o arquivo |
-| `package-skill.sh` | passou nas validações e copiou `hooks/`; o ZIP não foi gerado nesta máquina, que não tem `zip` |
+| Hook sem respostas | pede `crow:setup` e não libera nada |
+| Hook com uma preferência sem resposta | pede `crow:setup` citando só ela, e não libera nada |
+| Hook com tudo respondido (inclusive depois de atualizar) | não pede nada, copia as seis skills para `skills/` e aplica a tabela na `conventions` liberada, sem mexer no resto do arquivo |
+| Hook rodado de novo | não diz nada e não reescreve o arquivo |
+| `package-skill.sh` | valida `skills/` e `locked-skills/`, e o pacote leva as duas mais `hooks/`; o ZIP não foi gerado nesta máquina, que não tem `zip` |
+| Esconder pelo `settings.json` | descartado: lendo o Claude Code 2.1.223, `skillOverrides` vale para todas as skills menos as de plugin |
 
-O que falta: abrir uma sessão real com o plugin instalado e ver o Claude
-chamar a `setup` antes do primeiro pedido, a entrevista até o fim e o arquivo
-`~/.claude/crow/preferences.md` gravado; e uma sessão depois de atualizar. Não
+O que falta: uma sessão real com o plugin instalado, para ver o `/crow`
+mostrando só a `setup`, o Claude chamando a `setup` antes do primeiro pedido,
+a entrevista até o fim, as skills aparecendo depois do `/reload-plugins`, e o
+Claude Code aceitando as skills copiadas para dentro do plugin instalado. Não
 deu para rodar o Claude Code numa configuração isolada sem login.

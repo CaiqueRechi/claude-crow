@@ -36,7 +36,7 @@ Só rodam quando chamados. Nada é carregado nem salvo sozinho.
 | `.context/messages/` | um arquivo por mensagem entre agentes |
 
 Os modelos de cada arquivo estão em
-[skills/context/templates/](../skills/context/templates/).
+[locked-skills/context/templates/](../locked-skills/context/templates/).
 
 ## Cria só o que falta
 

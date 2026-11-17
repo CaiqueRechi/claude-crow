@@ -3,13 +3,19 @@
 As preferências pessoais de quem usa o crow. O plugin traz as do Caique como
 padrão; cada usuário confirma ou troca as suas.
 
+**Enquanto ela não termina, `/crow` mostra só a `setup`.** As outras seis
+skills ficam guardadas e nada consegue chamá-las.
+
 ## Quando ela roda
 
 Sozinha, antes do primeiro pedido da sessão, em dois casos:
 
 - **primeira vez** — ainda não existe `~/.claude/crow/preferences.md`;
-- **depois de uma atualização** — as respostas foram dadas numa versão do crow
-  diferente da instalada.
+- **preferência nova** — uma atualização trouxe ao catálogo uma preferência
+  que você ainda não respondeu. Só ela é perguntada.
+
+Uma atualização sem preferência nova não pergunta nada: as skills são
+liberadas sozinhas.
 
 E sempre que você chamar:
 
@@ -31,7 +37,10 @@ vez:
    **Código**, **Ambiente e ritmo**;
 3. pergunta cada preferência dos grupos escolhidos, oferecendo o valor atual
    primeiro;
-4. depois de uma atualização, pergunta à parte o que for novo na versão.
+4. com preferência nova, pergunta só ela, oferecendo o padrão primeiro.
+
+No fim, ela libera as outras skills e pede um `/reload-plugins`, para elas
+aparecerem no `/crow` na hora; sem ele, aparecem na sessão seguinte.
 
 ## O que é preferência
 
@@ -74,22 +83,34 @@ gosto:
 
 ## Como funciona por dentro
 
+- **A trava:** o plugin instalado traz só a `setup` em `skills/`; as outras
+  skills ficam em `locked-skills/`, que o Claude Code não lê. Esconder pelas
+  configurações (`skillOverrides`) não serve: o Claude Code ignora esse ajuste
+  em skills de plugin.
 - As respostas ficam em `~/.claude/crow/preferences.md`, fora da pasta do
-  plugin, para que uma atualização não as apague. O arquivo guarda a versão do
-  crow em que foram dadas.
+  plugin, para que uma atualização não as apague.
 - A `conventions` tem a tabela entre `<!-- crow:preferences:start -->` e
   `<!-- crow:preferences:end -->`. Onde uma seção dela afirma um desses
   valores, vale a tabela.
 - Um hook `SessionStart` ([hooks/session-start.sh](../hooks/session-start.sh))
-  roda a cada sessão. Com as respostas em dia, reescreve a tabela da
-  `conventions` instalada e não diz nada. Sem respostas, ou com a versão
-  diferente, pede ao Claude que rode a `setup` antes do primeiro pedido.
+  roda a cada sessão e compara as respostas com o catálogo da `setup`. Faltando
+  alguma, pede ao Claude que rode a `setup` antes do primeiro pedido, dizendo
+  quais faltam. Com tudo respondido, copia as skills de `locked-skills/` para
+  `skills/` (se ainda não estiverem lá) e reescreve a tabela da `conventions`.
+- Cada atualização instala uma pasta nova do plugin, só com a `setup` em
+  `skills/`. Se nada faltar, o hook libera as skills de novo sozinho.
+- Cada skill guardada começa com uma trava: sem as respostas completas, ela
+  manda para a `setup` antes de agir.
 - As outras skills dizem que os valores pessoais escritos nelas são só o
   padrão, e que vale a tabela.
 
 ## Limitações
 
 - Só no Claude Code. O crow do Codex não tem a `setup` nem o hook.
+- O Claude Code lê as skills ao abrir a sessão. Liberadas no meio dela, só
+  aparecem depois de um `/reload-plugins` ou na sessão seguinte.
+- Num clone, as cópias liberadas em `skills/` ficam fora do git pelo
+  `.gitignore`.
 - O hook é bash. No Windows ele roda pelo Git Bash que o Claude Code usa; os
   scripts `.sh` são fixados em LF pelo `.gitattributes`.
 - Uma preferência muda o que as skills dizem, não o que elas conseguem: um

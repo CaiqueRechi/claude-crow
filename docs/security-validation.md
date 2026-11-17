@@ -26,7 +26,7 @@ Só roda quando chamada. Antes de começar ela:
 ## O que ela entrega
 
 `docs/security/<AAAA-MM-DD>-<escopo>.md` no projeto avaliado, **sem commit**,
-seguindo [templates/report.md](../skills/security-validation/templates/report.md):
+seguindo [templates/report.md](../locked-skills/security-validation/templates/report.md):
 identificação com as versões das referências, resumo por estado, cobertura,
 achados com evidência redigida, exceções, riscos residuais e conclusão.
 
