@@ -69,7 +69,7 @@ minutos. Por isso, no Windows:
 - Comando que precisar rodar pelo Windows tira antes as variáveis herdadas
   que colidem com chaves do `.env` — o Compose prefere a variável do ambiente.
 
-Detalhes: [skills/build/references/wsl.md](../skills/build/references/wsl.md).
+Detalhes: [locked-skills/build/references/wsl.md](../locked-skills/build/references/wsl.md).
 
 ## Lentidão
 
@@ -81,7 +81,7 @@ encerrar processo de fora do projeto ou reiniciar o Docker Desktop — só
 acontece depois do seu sim, e ela mede de novo depois. Antes de entregar,
 encerra todo processo que abriu em segundo plano.
 
-Detalhes: [skills/build/references/slowness.md](../skills/build/references/slowness.md).
+Detalhes: [locked-skills/build/references/slowness.md](../locked-skills/build/references/slowness.md).
 
 ## Docker Desktop
 
@@ -95,7 +95,7 @@ Detalhes: [skills/build/references/slowness.md](../skills/build/references/slown
   defaults* ou desinstalar. Os três apagam o `docker_data.vhdx`, com as imagens
   e os volumes — o banco — de todos os projetos.
 
-Detalhes: [skills/build/references/docker-desktop.md](../skills/build/references/docker-desktop.md).
+Detalhes: [locked-skills/build/references/docker-desktop.md](../locked-skills/build/references/docker-desktop.md).
 
 ## Segurança do ambiente local
 
@@ -127,10 +127,10 @@ onde, sem repetir no chat.
 
 ## Stacks
 
-[skills/build/references/stacks.md](../skills/build/references/stacks.md) tem
+[locked-skills/build/references/stacks.md](../locked-skills/build/references/stacks.md) tem
 o padrão de PHP/Laravel, PostgreSQL, Node.js, Python e dos extras (Redis,
 Mailpit). PHP/Laravel tem o conjunto completo em
-[skills/build/templates/php-laravel/](../skills/build/templates/php-laravel/).
+[locked-skills/build/templates/php-laravel/](../locked-skills/build/templates/php-laravel/).
 
 ## Limitações
 

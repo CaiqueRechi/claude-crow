@@ -51,7 +51,7 @@ que você decidiu.
 ## O que é "100%"
 
 A cobertura é medida contra uma checklist fixa de dezesseis áreas —
-[coverage-checklist.md](../skills/analyst/references/coverage-checklist.md).
+[coverage-checklist.md](../locked-skills/analyst/references/coverage-checklist.md).
 Cada item termina num destes estados:
 
 | Estado | Conta como coberto |
@@ -83,7 +83,7 @@ esperar.
 
 `docs/requirements/<nome-da-solicitacao>.md` no projeto onde foi chamada, no
 idioma da conversa, seguindo
-[document-template.md](../skills/analyst/references/document-template.md):
+[document-template.md](../locked-skills/analyst/references/document-template.md):
 
 1. Resumo, objetivos e situação atual
 2. Partes interessadas e usuários

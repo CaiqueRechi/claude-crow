@@ -1,0 +1,15 @@
+{
+  "description": "Keeps the conventions' preferences table in step with the user's answers, and asks for /crow:setup on first use and after updates",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,14 +1,54 @@
 ---
 name: conventions
-description: Caique's standing working conventions, valid across every project of his — sparse code comments in English, camelCase identifiers and a snake_case schema, Clean Code and SOLID without exception, reversible migrations, a security check on every change (bot spam, XSS, exposed secrets), cache wherever the data allows, a cm- branch per task, one commit per change written in English with no co-authorship, tests bundled with new development but split out of a non-trivial alteration, documentation always in a commit of its own, a mistake already committed corrected by a new commit instead of a rewrite, no subagents unless he asks, disagreements raised before anything is built, and pushing left to him. Load it before writing code, creating a branch or creating any commit in any of his repositories, when asked what is left to commit, and when asked to split, reorder or rewrite commits. If you are unsure whether it applies, read it — it is short and it prevents rework.
+description: The user's standing working conventions, valid across every project of theirs, with their personal choices kept in a preferences table filled in by /crow:setup — sparse code comments in English, camelCase identifiers and a snake_case schema, Clean Code and SOLID without exception, reversible migrations, a security check on every change (bot spam, XSS, exposed secrets), cache wherever the data allows, a cm- branch per task, one commit per change written in English with no co-authorship, tests bundled with new development but split out of a non-trivial alteration, documentation always in a commit of its own, a mistake already committed corrected by a new commit instead of a rewrite, no subagents unless he asks, disagreements raised before anything is built, and pushing left to him. Load it before writing code, creating a branch or creating any commit in any of his repositories, when asked what is left to commit, and when asked to split, reorder or rewrite commits. If you are unsure whether it applies, read it — it is short and it prevents rework.
 ---
 
-# Caique's working conventions
+# Working conventions
 
-Standing preferences that apply to **every** project of his, not to one
+Standing preferences that apply to **every** project of the user, not to one
 codebase. They were stated directly by him, so treat them as decisions already
 made rather than suggestions to weigh. Where a repository's own history or
 guidelines contradict them, ask instead of picking silently.
+
+## Preferences
+
+The values below are the personal choices of whoever uses this plugin. "He"
+and "his", here and in every `crow` skill, mean the user named in this table.
+`/crow:setup` asks for them on first use and whenever an update adds a new
+preference, keeps the answers in `~/.claude/crow/preferences.md`, and the
+session-start hook rewrites this block from them. Until then, it shows the
+defaults.
+
+Where a section below states one of these values, **the table wins**: the
+sections explain the default and why it exists; the table is his choice. The
+rest of this skill — design, security, testing, one commit per change,
+history, hooks — is good practice and holds for everyone.
+
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
+
+<!-- crow:preferences:start -->
+| Preferência | Valor |
+| --- | --- |
+| Nome | Caique |
+| Idioma da conversa | o mesmo em que ele escrever |
+| Idioma dos documentos (contexto, requisitos, relatórios) | português |
+| Idioma de commits e comentários no código | inglês |
+| Prefixo de branch | `cm-` seguido de um título curto, minúsculo, com hífens |
+| Branch base | `main` |
+| Push | nunca: o agente para no commit, e o push é dele |
+| Reescrever commits | nunca sem ele pedir; um erro já commitado vai num commit novo |
+| Testes no commit | junto no desenvolvimento novo; em commit próprio na alteração não trivial |
+| Documentação no commit | sempre num commit `docs:` próprio, o último da mudança |
+| Prefixos de commit | `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `ci`, `chore` — sem escopo |
+| Nomes no código | `camelCase` em variáveis e métodos, `PascalCase` em classes |
+| Nomes no banco | `snake_case` |
+| Ambiente no Windows | WSL, distribuição `Ubuntu-24.04` |
+| Pasta dos projetos no WSL | `~/projects/<nome da pasta>` |
+| Limite de lentidão da build | mediana acima de 1 s |
+| Ritmo da analyst | uma pergunta por mensagem |
+<!-- crow:preferences:end -->
 
 Only what he has actually stated belongs in this skill. If you find yourself
 wanting to add a rule inferred from reading a codebase, that is a question for

@@ -17,13 +17,37 @@ comando com o prefixo do plugin.
 | `/crow:develop` | codifica o que o analyst documentou, fase por fase | só quando eu chamo |
 | `/crow:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
 | `/crow:security-validation` | analista de segurança defensiva | só quando eu chamo |
+| `/crow:setup` | as preferências pessoais de quem usa o crow | sozinha na primeira sessão e quando uma atualização traz preferência nova; ou quando eu chamo |
 
 A ordem num projeto novo: `context` → `analyst` → `develop` → `build` →
 `security-validation`. A `conventions` vale o tempo todo.
 
-Skill nova entra em `skills/<nome>/SKILL.md` e vira `/crow:<nome>`. O nome da
-pasta tem de bater com o `name:` do frontmatter: quando divergem, a skill
-simplesmente não carrega e não dá erro nenhum. Todo nome é em inglês.
+## setup
+
+O crow traz as minhas preferências como padrão, mas quem instala escolhe as
+suas: nome, idiomas, padrão de branch, push, como os commits se dividem,
+prefixos, nomes no código e no banco, a pasta e a distribuição do WSL, o limite
+de lentidão da `build` e o ritmo da `analyst`.
+
+Logo depois de instalar, `/crow` mostra **só a `setup`**: as outras skills
+ficam guardadas até você responder. Ela mostra a tabela, você mantém ou ajusta
+só o que quiser, as respostas ficam em `~/.claude/crow/preferences.md`, fora do
+plugin, e as outras skills são liberadas (um `/reload-plugins` faz elas
+aparecerem na hora). Uma atualização só pergunta de novo quando traz uma
+preferência que você ainda não respondeu — e aí pergunta só ela.
+
+```
+/crow:setup
+/crow:setup show
+```
+
+O que é preferência e o que é boa prática fixa:
+[docs/setup.md](docs/setup.md).
+
+Skill nova entra em `locked-skills/<nome>/SKILL.md` e vira `/crow:<nome>` depois
+do setup; em `skills/` fica só a `setup`. O nome da pasta tem de bater com o
+`name:` do frontmatter: quando divergem, a skill simplesmente não carrega e não
+dá erro nenhum. Todo nome é em inglês.
 
 Toda skill carrega o mesmo bloco de **regras inegociáveis**, de
 [.github/non-negotiable-rules.md](.github/non-negotiable-rules.md): subagente só
@@ -51,7 +75,10 @@ Como funciona: [docs/context.md](docs/context.md).
 ## conventions
 
 As decisões que eu já tomei e não quero repetir a cada sessão. Valem para
-qualquer projeto meu, e não descrevem sistema nenhum em específico.
+qualquer projeto meu, e não descrevem sistema nenhum em específico. Para quem
+instala o crow, as que são gosto pessoal (branch, idiomas, push, divisão dos
+commits, nomes) viram as preferências do `/crow:setup`; as que são boa prática
+valem para todos.
 
 | Assunto | Regra |
 | --- | --- |
@@ -72,7 +99,7 @@ qualquer projeto meu, e não descrevem sistema nenhum em específico.
 | Hooks | não se pula, nem com `--no-verify` |
 
 O detalhe e o **porquê** de cada uma estão em
-[skills/conventions/SKILL.md](skills/conventions/SKILL.md). O porquê é a parte
+[locked-skills/conventions/SKILL.md](locked-skills/conventions/SKILL.md). O porquê é a parte
 que importa: sem ele a letra é cumprida e a intenção se perde no primeiro caso
 que não estava previsto.
 

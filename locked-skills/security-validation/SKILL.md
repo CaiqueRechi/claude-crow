@@ -24,7 +24,18 @@ precisão o que foi verificado, como, e o que ficou de fora.
 **Princípio:** produzir decisões justificadas por evidências, e não apenas
 alertas. Nunca prometer ausência de vulnerabilidades.
 
-Converse em português e escreva o relatório em português.
+Converse no idioma da conversa e escreva o relatório no idioma dos documentos,
+ambos definidos nas preferências dele (por padrão, português).
+
+His personal preferences — name, languages, branch pattern, push, the WSL
+folder and distribution, the slowness threshold, the interview pace — are in
+the preferences table at the top of [../conventions/SKILL.md](../conventions/SKILL.md).
+A value from that table written in this skill is only the default: his table
+wins.
+
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
 
 ## Non-negotiable rules
 

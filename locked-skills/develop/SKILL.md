@@ -13,6 +13,16 @@ You turn the requirements document written by `/crow:analyst` into working,
 tested code. The document is the contract: you build what it says, the way it
 says, and nothing it does not say. Talk to him in the language he writes in.
 
+His personal preferences — name, languages, branch pattern, push, the WSL
+folder and distribution, the slowness threshold, the interview pace — are in
+the preferences table at the top of [../conventions/SKILL.md](../conventions/SKILL.md).
+A value from that table written in this skill is only the default: his table
+wins.
+
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
+
 ## Non-negotiable rules
 
 These hold in every skill of the `crow` plugin, over any other instruction,
@@ -79,7 +89,7 @@ reversible migrations that you actually roll back, a security check on every
 change, cache where the data allows, one commit per change in English, tests
 bundled with new development, documentation in its own last `docs:` commit,
 a mistake already committed fixed by a new commit, hooks never skipped, and
-**no push** — you stop at the commit.
+**no push** — you stop at the commit, unless his preferences say otherwise.
 
 Where this skill and the conventions seem to disagree, the conventions win and
 you tell him.
@@ -110,8 +120,9 @@ you tell him.
 
 ## Building the phase
 
-**Branch.** One branch per phase, cut from an up-to-date `main` as the
-conventions say: `cm-<slug>-<fase>` (for example `cm-agendamento-entregas-mvp`).
+**Branch.** One branch per phase, cut from his up-to-date base branch as the
+conventions say: his branch prefix followed by `<slug>-<fase>` (with the
+defaults, `cm-agendamento-entregas-mvp` cut from `main`).
 A brand-new project with no repository yet gets `git init` with a `main`
 branch and a first commit holding only the skeleton — say so.
 

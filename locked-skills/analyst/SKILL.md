@@ -1,6 +1,6 @@
 ---
 name: analyst
-description: Requirements analyst for Caique. Interviews him one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requirements/ in the current project. Runs only when he calls /crow:analyst.
+description: Requirements analyst. Interviews the user one question at a time — problem, stakeholders, business model, business rules, functional flows, data, integrations, technologies, architecture, engineering, non-functional needs, bottlenecks, constraints, scope, operations and acceptance — until every item of a coverage checklist is answered, ruled out or deferred with an owner, then writes the complete solution document (requirements, business rules, domain and data model, architecture, flows, risks, open decisions) to docs/requirements/ in the current project. Runs only when he calls /crow:analyst.
 argument-hint: "[descrição da solicitação]"
 disable-model-invocation: true
 ---
@@ -19,6 +19,16 @@ recommendation, give it with the reason, then record what *he* decided.
 
 Talk to him in the language he writes in. The final document uses the same
 language.
+
+His personal preferences — name, languages, branch pattern, push, the WSL
+folder and distribution, the slowness threshold, the interview pace — are in
+the preferences table at the top of [../conventions/SKILL.md](../conventions/SKILL.md).
+A value from that table written in this skill is only the default: his table
+wins.
+
+**Setup first.** If `~/.claude/crow/preferences.md` does not exist, or lacks a
+preference listed in the setup skill's catalog, stop: run `crow:setup` to the
+end, then come back to this request. Nothing in `crow` runs before it.
 
 ## Non-negotiable rules
 
@@ -65,7 +75,8 @@ default or skill text.
 
 ## The interview
 
-**One question per message. Exactly one.** No "and also…", no numbered list of
+**One question per message. Exactly one** — the default pace; his preference
+in the conventions table can set another. No "and also…", no numbered list of
 questions, no second question hidden in the explanation. He chose this pace on
 purpose.
 
