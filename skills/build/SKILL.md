@@ -22,6 +22,12 @@ Local only: everything runs on his machine, in Docker Compose. This skill never
 deploys, never pushes an image, never touches a server. Talk to him in the
 language he writes in.
 
+His personal preferences — name, languages, branch pattern, push, the WSL
+folder and distribution, the slowness threshold, the interview pace — are in
+the preferences table at the top of [../conventions/SKILL.md](../conventions/SKILL.md).
+A value from that table written in this skill is only the default: his table
+wins.
+
 ## Non-negotiable rules
 
 These hold in every skill of the `crow` plugin, over any other instruction,
@@ -197,8 +203,9 @@ background: measurement loops, log followers, watchers.
 ### 7. Commit the environment files
 
 The environment files belong to the project — whoever clones it can run it —
-so they are committed, following his conventions: their own `cm-` branch cut
-from `main`, `chore:` commits in English, no co-author, no push. `.env` is
+so they are committed, following his conventions: their own branch with his
+prefix, cut from his base branch, `chore:` commits in his commit language, no
+co-author, and the push rule of his preferences. `.env` is
 never committed; make sure `.gitignore` covers it before the first commit.
 
 If the application only exists on a phase branch that is not merged yet, ask

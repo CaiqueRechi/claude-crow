@@ -21,7 +21,14 @@ The first word picks the command; nothing picks `prepare`.
 The point of every command is the same: someone who never saw this
 conversation — another model, another tool, him next week — opens the project
 and knows exactly what is going on and what to do next. Write for that reader.
-Files are written in Portuguese, the language he reads.
+Files are written in the document language of his preferences (Portuguese by
+default).
+
+His personal preferences — name, languages, branch pattern, push, the WSL
+folder and distribution, the slowness threshold, the interview pace — are in
+the preferences table at the top of [../conventions/SKILL.md](../conventions/SKILL.md).
+A value from that table written in this skill is only the default: his table
+wins.
 
 ## Non-negotiable rules
 
