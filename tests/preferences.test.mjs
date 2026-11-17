@@ -51,7 +51,8 @@ function withPluginCopy(runScenario) {
   for (const folder of [".claude-plugin", "skills", "locked-skills", "hooks"]) {
     cpSync(join(repositoryRoot, folder), join(pluginRoot, folder), { recursive: true });
   }
-  const preferencesFile = join(sandbox, "answers", "preferences.md");
+  const crowHome = join(sandbox, "answers");
+  const preferencesFile = join(crowHome, "preferences.md");
   try {
     runScenario({
       visibleSkills: () => readdirSync(join(pluginRoot, "skills")).sort(),
@@ -62,9 +63,15 @@ function withPluginCopy(runScenario) {
           env: {
             ...process.env,
             CLAUDE_PLUGIN_ROOT: toPosixPath(pluginRoot),
+            CROW_HOME: toPosixPath(crowHome),
             CROW_PREFERENCES_FILE: toPosixPath(preferencesFile),
           },
         }),
+      createVault: ({ withKey = true } = {}) => {
+        mkdirSync(crowHome, { recursive: true });
+        writeFileSync(join(crowHome, "vault.json"), "{}");
+        if (withKey) writeFileSync(join(crowHome, "app-key"), "00");
+      },
       saveAnswers: (rows) => {
         mkdirSync(dirname(preferencesFile), { recursive: true });
         writeFileSync(preferencesFile, answersFile(rows));
@@ -110,9 +117,28 @@ test("a preference the user never answered: the hook asks only for it and releas
   });
 });
 
-test("an update with no new preference does not ask again: the skills are released", () => {
+test("complete preferences without a vault keep crow locked and ask for setup", () => {
   withPluginCopy(({ runHook, saveAnswers, visibleSkills }) => {
     saveAnswers(catalogDefaults());
+    const context = JSON.parse(runHook()).hookSpecificOutput.additionalContext;
+    assert.match(context, /not created the vault/);
+    assert.deepEqual(visibleSkills(), ["setup"]);
+  });
+});
+
+test("a vault whose app key was lost asks for recovery and releases nothing", () => {
+  withPluginCopy(({ runHook, saveAnswers, createVault, visibleSkills }) => {
+    saveAnswers(catalogDefaults());
+    createVault({ withKey: false });
+    assert.match(JSON.parse(runHook()).hookSpecificOutput.additionalContext, /app key of this machine is missing/);
+    assert.deepEqual(visibleSkills(), ["setup"]);
+  });
+});
+
+test("an update with no new preference does not ask again: the skills are released", () => {
+  withPluginCopy(({ runHook, saveAnswers, createVault, visibleSkills }) => {
+    saveAnswers(catalogDefaults());
+    createVault();
     const context = JSON.parse(runHook()).hookSpecificOutput.additionalContext;
     assert.match(context, /released/);
     assert.doesNotMatch(context, /crow:setup/);
@@ -121,9 +147,10 @@ test("an update with no new preference does not ask again: the skills are releas
 });
 
 test("complete answers: the hook writes them into the released conventions", () => {
-  withPluginCopy(({ runHook, saveAnswers, conventionsFile }) => {
+  withPluginCopy(({ runHook, saveAnswers, createVault, conventionsFile }) => {
     const answers = catalogDefaults().map(([name, value]) => [name, name === "Nome" ? "Ana" : value]);
     saveAnswers(answers);
+    createVault();
     runHook();
     const conventions = readNormalized(conventionsFile);
     const original = readNormalized(join(repositoryRoot, "locked-skills", "conventions", "SKILL.md"));
@@ -134,8 +161,9 @@ test("complete answers: the hook writes them into the released conventions", () 
 });
 
 test("already released and applied: the hook says nothing and touches nothing", () => {
-  withPluginCopy(({ runHook, saveAnswers, conventionsFile }) => {
+  withPluginCopy(({ runHook, saveAnswers, createVault, conventionsFile }) => {
     saveAnswers(catalogDefaults());
+    createVault();
     runHook();
     const firstWrite = statSync(conventionsFile).mtimeMs;
 

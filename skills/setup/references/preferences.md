@@ -23,6 +23,7 @@ answers are asked together when he chooses to adjust.
 | Pasta dos projetos no WSL | Ambiente e ritmo | Em que pasta do WSL os projetos ficam? | `~/projects/<nome da pasta>` | build |
 | Limite de lentidão da build | Ambiente e ritmo | A partir de quanto tempo de resposta o ambiente é lento? | mediana acima de 1 s | build |
 | Ritmo da analyst | Ambiente e ritmo | Como a analyst pergunta? | uma pergunta por mensagem | analyst |
+| Repositório privado de skills | Ambiente e ritmo | Você tem acesso a um repositório privado de skills, fluxos e mapas de acesso? Qual a URL? | nenhum | generate-test-steps, generate-flows, create-test-users |
 
 ## Not preferences
 

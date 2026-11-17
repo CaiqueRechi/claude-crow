@@ -18,9 +18,33 @@ comando com o prefixo do plugin.
 | `/crow:build` | sobe o projeto num ambiente Docker local para eu testar | só quando eu chamo |
 | `/crow:security-validation` | analista de segurança defensiva | só quando eu chamo |
 | `/crow:setup` | as preferências pessoais de quem usa o crow | sozinha na primeira sessão e quando uma atualização traz preferência nova; ou quando eu chamo |
+| `/crow:generate-test-steps` | catálogo de testes de uma operação, com prints marcados | só quando eu chamo |
+| `/crow:generate-flows` | mapeia o fluxo de ponta a ponta de uma operação | quando eu chamo, ou quando o catálogo precisa de um fluxo que não existe |
+| `/crow:create-test-users` | um usuário de teste por preset do mapa de acessos | quando eu chamo, ou quando falta um usuário |
 
 A ordem num projeto novo: `context` → `analyst` → `develop` → `build` →
-`security-validation`. A `conventions` vale o tempo todo.
+`security-validation`. A `conventions` vale o tempo todo. Com o ambiente local
+de pé, `generate-test-steps` documenta os testes das telas.
+
+## Testes de tela
+
+Peço "catálogo de testes do cadastro de centro de custo" e recebo, para cada
+teste, os prints com destaques numerados, o usuário necessário, as ações, o
+valor e a resposta esperada de cada campo e o resultado final — mais um teste
+de validação por valor recusado e um de permissão por perfil recusado. As telas
+são abertas no Chrome ou no Edge que já estão instalados, por um script do
+próprio crow (DevTools Protocol, só Node nativo, sem código de terceiros); o
+modelo lê a tela como texto, nunca como imagem, e um fluxo já mapeado roda sem
+ele. Só no ambiente local. Fluxos e catálogos ficam criptografados em
+`~/.claude/crow/`; um repositório privado de mapas de acesso e fluxos é opcional.
+
+```
+/crow:generate-test-steps catálogo de testes da tela de centros de custo
+/crow:generate-flows cadastro de centro de custo pelo menu Administração
+/crow:create-test-users legal
+```
+
+Como funciona: [docs/screen-tests.md](docs/screen-tests.md).
 
 ## setup
 

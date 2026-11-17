@@ -5,7 +5,8 @@
 # rewritten from the answers. Never fails the session: exits 0 always.
 
 pluginRoot="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
-preferencesFile="${CROW_PREFERENCES_FILE:-$HOME/.claude/crow/preferences.md}"
+crowHome="${CROW_HOME:-$HOME/.claude/crow}"
+preferencesFile="${CROW_PREFERENCES_FILE:-$crowHome/preferences.md}"
 catalogFile="$pluginRoot/skills/setup/references/preferences.md"
 conventionsFile="$pluginRoot/skills/conventions/SKILL.md"
 startMarker="<!-- crow:preferences:start -->"
@@ -32,6 +33,14 @@ fi
 missingPreferences="$(comm -23 <(preferenceNames "$catalogFile" | sort) <(preferenceNames "$preferencesFile" | sort) | paste -sd ',' - | sed 's/,/, /g')"
 if [[ -n "$missingPreferences" ]]; then
     askForSetup "this version of crow has preferences the user has not answered yet (${missingPreferences})."
+fi
+
+# The vault (app key and the copy wrapped by the security answer) is part of the setup too.
+if [[ ! -f "$crowHome/vault.json" ]]; then
+    askForSetup "this user has not created the vault that encrypts crow data on this machine."
+fi
+if [[ ! -f "$crowHome/app-key" ]]; then
+    askForSetup "the app key of this machine is missing; it must be recovered with the security answer, or the vault reset."
 fi
 
 releasedSkills=()

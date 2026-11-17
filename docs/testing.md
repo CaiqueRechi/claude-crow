@@ -331,3 +331,24 @@ mostrando só a `setup`, o Claude chamando a `setup` antes do primeiro pedido,
 a entrevista até o fim, as skills aparecendo depois do `/reload-plugins`, e o
 Claude Code aceitando as skills copiadas para dentro do plugin instalado. Não
 deu para rodar o Claude Code numa configuração isolada sem login.
+
+## Testes de tela, cofre e repositório privado (1.4.0)
+
+**Os scripts foram exercidos de verdade, com o Chrome desta máquina; as três
+skills, não — nenhum catálogo real foi gerado ainda.**
+
+| Verificação | Resultado |
+| --- | --- |
+| `npm test` | 41 de 41 passando |
+| Cofre | cria a chave sem gravar a resposta; recupera com a resposta certa e recusa a errada (maiúsculas contam); o recomeço move os dados antigos para backup; os caminhos da CLI não saem de `~/.claude/crow` |
+| Navegador | abre o Chrome instalado num perfil temporário, resume a tela (senha mascarada), preenche, escolhe, marca com número e legenda, tira print, clica, lê a mensagem e gera PDF; fecha e apaga o perfil |
+| Fluxos | salvos num arquivo criptografado com índice; recusados sem aprovação ou com regra sem origem; o local vence o privado; um fluxo roda sozinho com 3 prints e confere o resultado; um botão renomeado faz parar no passo 2, com o motivo |
+| Mapa de acessos | responde só a parte pedida; `who-can` separa os presets que podem dos que não podem (mapa fictício nos testes) |
+| Catálogo | guardado criptografado com os prints e aberto numa cópia temporária; Markdown vira HTML com tabelas, listas e imagens, sem deixar passar `<script>` |
+| Repositório privado | um repositório local foi clonado, criptografado e o clone apagado; sem acesso, só as pastas foram criadas; também testado com o clone real do repositório privado, nesta máquina |
+| Hook | sem cofre, ou com o cofre e sem a chave, o crow continua travado e pede a `setup` |
+
+O que falta: rodar as três skills num projeto real (o Hub no ambiente local),
+com a receita de usuários aprovada, um fluxo mapeado e um catálogo gerado; e
+medir os tokens desse primeiro uso. Os testes do navegador são pulados numa
+máquina sem Chrome nem Edge.
