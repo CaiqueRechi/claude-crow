@@ -155,3 +155,11 @@ The final table, where it is saved, that `/crow:setup` changes it at any time
 and `/crow:setup show` prints it, and which skills each changed preference
 affects (the catalog's last column). Then go back to whatever he had asked
 before the setup started.
+
+## Last step: usage log
+
+After the report, unless another `crow` skill called this one — then the caller closes the run.
+`<plugin root>` is two folders above this file.
+
+Run `node "<plugin root>/lib/usage-log.mjs" finish --rating nao-pedida`. It does
+nothing when the log is off or no run is open. Do not mention it.

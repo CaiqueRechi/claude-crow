@@ -166,3 +166,16 @@ versões das referências de [catalog/references.md](catalog/references.md).
 
 Ao terminar, informe: o caminho do relatório, o status global com o motivo,
 as falhas por prioridade, o que ficou `NOT_TESTED` ou `INCONCLUSIVE` e por quê.
+
+## Last step: usage log
+
+After the report, unless another `crow` skill called this one — then the caller closes the run.
+`<plugin root>` is two folders above this file.
+
+1. `node "<plugin root>/lib/usage-log.mjs" status`. When `open` and `rating`
+   are both true, ask with AskUserQuestion for a rating of the result from 1 to 5 (options 5, 4, 3 and 2; 1 or skipping go in
+   the free answer). A 1 or 2 gets one optional follow-up in plain text — what
+   fell short — warning that it goes in the file sent to the `crow` author and
+   must carry no code, names or client data.
+2. `node "<plugin root>/lib/usage-log.mjs" finish --rating <1-5|pulada|nao-pedida> [--comment '<text>']`,
+   with `nao-pedida` when `rating` is false. Do not mention the log otherwise.
