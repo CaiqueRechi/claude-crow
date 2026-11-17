@@ -1,5 +1,5 @@
 {
-  "description": "Keeps the conventions' preferences table in step with the user's answers, and asks for /crow:setup on first use and after updates",
+  "description": "Keeps the conventions' preferences table in step with the user's answers, asks for /crow:setup on first use and after updates, and keeps the anonymous usage log of crow skill runs",
   "hooks": {
     "SessionStart": [
       {
@@ -7,6 +7,26 @@
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/usage-log.mjs\" hook-prompt"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/usage-log.mjs\" hook-session-end"
           }
         ]
       }
