@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Sets the user's personal preferences for the crow plugin — name, languages, branch pattern, push, commit granularity and prefixes, code and database naming, the Windows/WSL environment, the build's slowness threshold and the analyst's pace — and writes them into the preferences table of the conventions skill. It is the only crow skill available until it is done: the others are released when every preference has an answer. Runs on the first session after crow is installed, after an update that adds new preferences, when the session-start hook asks for it, and whenever he calls /crow:setup to change something.
+description: Sets the user's personal preferences for the crow plugin — name, languages, branch pattern, push, commit granularity and prefixes, code and database naming, the Windows/WSL environment, the build's slowness threshold and the analyst's pace — and writes them into the preferences table of the conventions skill; also creates the vault that encrypts crow data on the machine (with a security question of the user's own to recover its key) and brings in the private repository, encrypted, when the user has access. It is the only crow skill available until it is done: the others are released when every preference has an answer. Runs on the first session after crow is installed, after an update that adds new preferences, when the session-start hook asks for it, and whenever he calls /crow:setup to change something.
 argument-hint: "[show]"
 ---
 
@@ -105,7 +105,32 @@ updated: <YYYY-MM-DD>
 Keep his words; values that are names, paths or prefixes go in backticks, as
 in the catalog.
 
-## 4. Apply now
+## 4. Vault and private data
+
+crow keeps flows, catalogs and private access maps encrypted on this machine.
+The scripts live in `<plugin root>/lib/`; each prints JSON. Answers go on
+stdin, never as arguments, so they stay out of process lists.
+
+1. **Vault.** `node "<plugin root>/lib/vault.mjs" status`.
+   - No vault: ask him to choose a security question and its answer — his own,
+     not a shared one; say the answer is case sensitive and that only a key
+     derived from it is stored, never the answer. Then
+     `echo '{"question": "...", "answer": "..."}' | node "<plugin root>/lib/vault.mjs" init`.
+   - Vault without app key (the key was lost): ask the question back and run
+     `echo '{"answer": "..."}' | node "<plugin root>/lib/vault.mjs" recover`.
+     A wrong answer can be retried. If he has forgotten it, say plainly what is
+     lost — the flows he mapped and has not sent, and his catalogs — and only
+     after his yes run `reset` with a new question and answer: the old data is
+     moved to a backup folder, never deleted, in case the answer comes back.
+2. **Private repository.** With a URL in the preference "Repositório privado
+   de skills", run `node "<plugin root>/lib/private-sync.mjs" "<url>"`: it
+   clones with his own git credentials, encrypts everything into
+   `~/.claude/crow/private/` and deletes the plaintext clone. Without access,
+   or with "nenhum", it only creates the folders for his own flows and
+   catalogs — say which, and that crow works without the private data. Never
+   write the URL anywhere else.
+
+## 5. Apply now
 
 Run the session-start hook once: with every preference answered it releases
 the other skills into `skills/` and writes his answers into the conventions
@@ -124,7 +149,7 @@ Claude Code reads the plugin's skills when the session starts, so ask him to
 run `/reload-plugins` — that makes the released skills appear in `/crow` now;
 otherwise they appear in the next session.
 
-## 5. Report
+## 6. Report
 
 The final table, where it is saved, that `/crow:setup` changes it at any time
 and `/crow:setup show` prints it, and which skills each changed preference
