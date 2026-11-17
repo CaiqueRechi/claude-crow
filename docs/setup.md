@@ -63,9 +63,27 @@ aparecerem no `/crow` na hora; sem ele, aparecem na sessão seguinte.
 | Pasta dos projetos no WSL | `~/projects/<pasta>` | build |
 | Limite de lentidão da build | mediana acima de 1 s | build |
 | Ritmo da analyst | uma pergunta por mensagem | analyst |
+| Repositório privado de skills | nenhum | generate-test-steps, generate-flows, create-test-users |
 
 O catálogo completo, com a pergunta de cada uma, está em
 [skills/setup/references/preferences.md](../skills/setup/references/preferences.md).
+
+## Cofre e repositório privado
+
+Além das preferências, a `setup` prepara o que os testes de tela precisam:
+
+- **o cofre:** você escolhe uma pergunta de segurança e a resposta (a sua, não
+  uma compartilhada; maiúsculas e minúsculas contam). O crow cria uma app key
+  nesta máquina e guarda uma cópia dela embrulhada pela resposta. A resposta
+  nunca é gravada. Perdeu a chave: a `setup` pergunta de novo e recupera.
+  Esqueceu a resposta: só com o seu sim, ela recomeça com uma chave nova e
+  guarda os dados antigos num backup;
+- **o repositório privado:** com uma URL na preferência, ela clona com as suas
+  credenciais do git, criptografa tudo em `~/.claude/crow/private/` e apaga o
+  clone. Sem acesso, só cria as pastas dos seus fluxos e catálogos.
+
+O crow continua travado até o cofre existir. Detalhes:
+[screen-tests.md](screen-tests.md).
 
 ## O que não é preferência
 
